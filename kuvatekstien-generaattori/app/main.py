@@ -1,5 +1,6 @@
 import tempfile
 import os
+import shutil
 
 from fastapi import FastAPI, UploadFile, File, HTTPException, Form, Request
 from fastapi.responses import Response
@@ -10,6 +11,12 @@ from languages import LANGUAGES
 
 app = FastAPI(title="Caption Generator with Whisper")
 templates = Jinja2Templates(directory="templates")
+
+@app.middleware("http")
+async def log_req(request: Request, call_next):
+    cl = request.headers.get("content-length")
+    print("incoming", request.method, request.url.path, "content-length", cl)
+    return await call_next(request)
 
 @app.post("/transcribe")
 async def transcribe_video(
@@ -22,7 +29,7 @@ async def transcribe_video(
         raise HTTPException(status_code=400, detail="Unsupported video format")
 
     with tempfile.NamedTemporaryFile(delete=False, suffix=ext) as tmp_video:
-        tmp_video.write(await file.read())
+        shutil.copyfileobj(file.file, tmp_video)
         video_path = tmp_video.name
 
     try:

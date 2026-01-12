@@ -94,7 +94,7 @@ async function run() {
     lines[i] = `${String(i+1).padStart(2,"0")} ${files[i].name} 5%`;
     status.textContent = lines.join("\n");
 
-    const res = await fetch("/transcribe", {
+    const res = await fetch("/captions/transcribe", {
       method: "POST",
       body: fd
     });
