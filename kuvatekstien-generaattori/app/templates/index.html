@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Caption Generator by Dee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap 5 CDN -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+</head>
+
+<body class="bg-light">
+
+<div class="container py-4" style="max-width: 720px;">
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+
+      <h3 class="card-title mb-3">🎧 Caption Generator</h3>
+      <p class="text-muted">
+        Your subtitles will be saved to your <b>Downloads</b> folder.<br>
+        It may take a while — grab a ☕ or 🍵 and be patient 🙂
+      </p>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Language</label>
+          <select id="lang" class="form-select">
+            {% for code, name in languages.items() %}
+              <option value="{{ code }}" {% if code == "fi" %}selected{% endif %}>
+                {{ name }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Device</label>
+          <select id="device" class="form-select">
+            <option value="cpu">CPU</option>
+            <option value="cuda">GPU</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Video files</label>
+        <input
+          type="file"
+          id="files"
+          class="form-control"
+          multiple
+        >
+      </div>
+
+      <div class="d-grid mb-3">
+        <button class="btn btn-primary" onclick="run()">
+          Transcribe
+        </button>
+      </div>
+
+      <p class="small text-muted">
+        Progress updates jump between 0%, 5%, 90%, and 100% — this is normal 😄
+      </p>
+
+      <pre id="status" class="bg-dark text-light p-3 rounded small"></pre>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+async function run() {
+  const files = Array.from(document.getElementById('files').files);
+  const lang = document.getElementById('lang').value;
+  const device = document.getElementById('device').value;
+  const status = document.getElementById('status');
+
+  let lines = files.map((f, i) =>
+    `${String(i+1).padStart(2,"0")} ${f.name} 0%`
+  );
+  status.textContent = lines.join("\n");
+
+  for (let i = 0; i < files.length; i++) {
+    const fd = new FormData();
+    fd.append("file", files[i]);
+    fd.append("language", lang);
+    fd.append("device", device);
+
+    lines[i] = `${String(i+1).padStart(2,"0")} ${files[i].name} 5%`;
+    status.textContent = lines.join("\n");
+
+    const res = await fetch("/transcribe", {
+      method: "POST",
+      body: fd
+    });
+
+    lines[i] = `${String(i+1).padStart(2,"0")} ${files[i].name} 90%`;
+    status.textContent = lines.join("\n");
+
+    const blob = await res.blob();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = files[i].name.replace(/\.[^.]+$/, "") + ".srt";
+    a.click();
+
+    lines[i] = `${String(i+1).padStart(2,"0")} ${files[i].name} 100% ✅`;
+    status.textContent = lines.join("\n");
+  }
+}
+</script>
+
+</body>
+</html>
