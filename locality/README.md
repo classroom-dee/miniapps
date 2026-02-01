@@ -2,6 +2,7 @@
 **If you have an older version, you need to delete the config file under c:/users/your-user-name/.locale_master.json**
 1. `pip install -r requirements.txt --no-cache-dir`
 2. `python main.py`
+- You can add/remove more cities from context menu (open with right mouse button)
 
 ### Simple Widget For Locality
 - Weather
