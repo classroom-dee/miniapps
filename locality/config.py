@@ -6,7 +6,7 @@ import os
 import json
 from pathlib import Path
 
-APP_NAME = "simple_worldclock_widget"
+APP_NAME = "locale_master"
 CONFIG_PATH = Path(os.path.expanduser(f"~/.{APP_NAME}.json"))
 
 DEFAULT_CITIES = [

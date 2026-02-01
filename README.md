@@ -6,3 +6,4 @@
 |-|-|-|
 |gitHub follow reciprocator 😆|❌|Follow back + Un-follow non-followers|
 |caption generator|✔️|Video input -> Caption|
+|locality widget|❌|Floating weather/world clock widget|

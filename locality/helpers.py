@@ -2,7 +2,6 @@
 # Weather helpers (Open-Meteo)
 # ---------------------------
 
-from collections import defaultdict
 import sys
 import os
 
@@ -13,38 +12,36 @@ except ImportError:
     sys.exit(1)
 
 # Map Open-Meteo weathercode to icon
-WEATHER_ICON = defaultdict(
-    {
-        0: "clear-day",
-        1: "partly-cloudy-day",
-        2: "partly-cloudy-day",
-        3: "cloudy",
-        45: "fog",
-        48: "fog",
-        51: "partly-cloudy-day-rain",
-        53: "partly-cloudy-day-rain",
-        55: "partly-cloudy-day-rain",
-        56: "drizzle",
-        57: "drizzle",
-        61: "rain",
-        63: "rain",
-        65: "rain",
-        66: "rain",
-        67: "rain",
-        71: "snow",
-        73: "snow",
-        75: "snow",
-        77: "snow",
-        80: "rain",
-        81: "rain",
-        82: "rain",
-        85: "snow",
-        86: "snow",
-        95: "thunderstorm",
-        96: "hail",
-        99: "hail",
-    }
-)
+WEATHER_ICON = {
+    0: "clear-day",
+    1: "partly-cloudy-day",
+    2: "partly-cloudy-day",
+    3: "cloudy",
+    45: "fog",
+    48: "fog",
+    51: "partly-cloudy-day-rain",
+    53: "partly-cloudy-day-rain",
+    55: "partly-cloudy-day-rain",
+    56: "drizzle",
+    57: "drizzle",
+    61: "rain",
+    63: "rain",
+    65: "rain",
+    66: "rain",
+    67: "rain",
+    71: "snow",
+    73: "snow",
+    75: "snow",
+    77: "snow",
+    80: "rain",
+    81: "rain",
+    82: "rain",
+    85: "snow",
+    86: "snow",
+    95: "thunderstorm",
+    96: "hail",
+    99: "hail",
+}
 
 
 def get_full_icon_path(weather_code, icon_dir, extension=".png"):
