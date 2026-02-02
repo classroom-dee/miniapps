@@ -17,6 +17,7 @@
 
 ### Build
 **In windows, your Python must be built with Tcl/Tk, i.e., Python from the MS Store**
+**For Linux, install python with python3-tk(Debian)**
 1. Clone this, make a disposable env `python -m venv .venv` and then `source .venv/bin/activate` or `.venv\Scripts\activate.bat` in Windows
 2. `pip install pyinstaller`
 3. `cd locality`
