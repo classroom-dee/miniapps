@@ -4,3 +4,7 @@
 # build artifacts
 locality/build/
 locality/dist/locale-master
+locality/dist/locale-master-win.exe
+
+# test logs
+locality/dist/locale-master.log

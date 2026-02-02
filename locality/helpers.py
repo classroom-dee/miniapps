@@ -4,6 +4,7 @@
 
 import sys
 import os
+from datetime import datetime
 
 try:
     import requests
@@ -47,7 +48,9 @@ WEATHER_ICON = {
 def get_full_icon_path(weather_code, icon_dir, extension=".png"):
     file_name = WEATHER_ICON.get(weather_code, "barometer")
     file_name += extension
-    return os.path.join(icon_dir, file_name)
+    full_path = os.path.join(icon_dir, file_name)
+    log(f"INFO: icon full path: {full_path}")
+    return full_path
 
 
 def fetch_current_weather(lat, lon, tz, icon_dir):
@@ -58,14 +61,18 @@ def fetch_current_weather(lat, lon, tz, icon_dir):
         "https://api.open-meteo.com/v1/forecast?"
         f"latitude={lat}&longitude={lon}&current_weather=true&timezone={tz}"
     )
-    r = requests.get(url, timeout=8)
-    r.raise_for_status()
-    data = r.json()
-    cw = data.get("current_weather", {})
-    code = cw.get("weathercode")
-    temp = cw.get("temperature")
-    icon = get_full_icon_path(code, icon_dir)  # must return full path
-    return icon, temp
+    try:
+        r = requests.get(url, timeout=8)
+        r.raise_for_status()
+        data = r.json()
+        cw = data.get("current_weather", {})
+        code = cw.get("weathercode")
+        temp = cw.get("temperature")
+        icon = get_full_icon_path(code, icon_dir)  # must return full path
+        return icon, temp
+    except Exception as e:
+        log(f"Something went wrong: {e}")
+        return
 
 
 def geocode_city(name):
@@ -77,16 +84,27 @@ def geocode_city(name):
         "https://geocoding-api.open-meteo.com/v1/search?"
         f"name={requests.utils.requote_uri(name)}&count=1&language=en&format=json"
     )
-    r = requests.get(url, timeout=8)
-    r.raise_for_status()
-    data = r.json()
-    results = data.get("results") or []
-    if not results:
-        print(f"no result ! data: {data}")
-        return None
-    it = results[0]
-    display = it["name"]
-    if it.get("country"):
-        display += f", {it['country']}"
-    tz = it.get("timezone")
-    return {"name": display, "lat": it["latitude"], "lon": it["longitude"], "tz": tz}
+    try:
+        r = requests.get(url, timeout=8)
+        r.raise_for_status()
+        data = r.json()
+        results = data.get("results") or []
+        if not results:
+            return None
+        it = results[0]
+        display = it["name"]
+        if it.get("country"):
+            display += f", {it['country']}"
+        tz = it.get("timezone")
+        return {"name": display, "lat": it["latitude"], "lon": it["longitude"], "tz": tz}
+    except Exception as e:
+        log(f"Something went wrong: {e}")
+        return
+
+LOG_FILE = "locale-master.log"
+
+def log(msg):
+    ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    line = f"[{ts}] {msg}\n"
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
+        f.write(line)
