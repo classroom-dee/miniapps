@@ -1,2 +1,6 @@
 .env
 .venv
+
+# build artifacts
+locality/build/
+locality/dist/locale-master
