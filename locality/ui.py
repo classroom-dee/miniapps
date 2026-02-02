@@ -84,7 +84,7 @@ class Row(tk.Frame):
         else:
             self.temp_lbl.config(text=f"{round(self.temperature)}°C")
 
-    def maybe_update_weather(self, min_interval=timedelta(minutes=10)):
+    def maybe_update_weather(self, min_interval=timedelta(minutes=30)):
         if datetime.now() - self.last_weather_fetch < min_interval:
             return
 

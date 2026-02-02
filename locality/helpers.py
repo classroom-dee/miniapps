@@ -49,7 +49,7 @@ def get_full_icon_path(weather_code, icon_dir, extension=".png"):
     file_name = WEATHER_ICON.get(weather_code, "barometer")
     file_name += extension
     full_path = os.path.join(icon_dir, file_name)
-    log(f"INFO: icon full path: {full_path}")
+    # log(f"INFO: icon full path: {full_path}")
     return full_path
 
 

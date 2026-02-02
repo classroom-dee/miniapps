@@ -10,6 +10,7 @@
 - Get the release from [here](https://github.com/classroom-dee/miniapps/releases/latest)
 - Unzip
 - Use with right-click context menu
+- Don't add/remove things too quickly -> will quickly hit the API rate limit
 
 ### Dev
 1. `pip install -r requirements.txt --no-cache-dir`
@@ -23,6 +24,10 @@
 3. `cd locality`
 4. `pyinstaller --onefile --add-data="assets/meteocon/*.png:assets/meteocon" --hidden-import=requests -n locale-master main.py`
 5. Or, on Windows: `pyinstaller.exe --onefile --add-data="assets/meteocon:assets/meteocon" --hidden-import=requests --no-console -n locale-master-win main.py`
+
+### Todos and issues
+- Temp and icon not showing due to API rate limit (Can't be helped! 😔) -> Per row update is not viable -> use cache
+- Build from tk-enabled python (for Linux)
 
 ### Acknowledgement
 Weather icons from [**Meteocons** by Bas Milius](https://github.com/basmilius/weather-icons)
