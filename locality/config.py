@@ -44,6 +44,9 @@ def load_config():
 
 def save_config(cfg):
     try:
+        cfg = dict(cfg)
+        cfg.pop("weather_cache", None) # not persisting cache in config cuz weather = ephemeral
+        
         with open(CONFIG_PATH, "w", encoding="utf-8") as f:
             json.dump(cfg, f, ensure_ascii=False, indent=2)
     except Exception as e:

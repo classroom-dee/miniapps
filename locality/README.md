@@ -23,7 +23,7 @@
 2. `pip install pyinstaller`
 3. `cd locality`
 4. `pyinstaller --onefile --add-data="assets/meteocon/*.png:assets/meteocon" --hidden-import=requests -n locale-master main.py`
-5. Or, on Windows: `pyinstaller.exe --onefile --add-data="assets/meteocon:assets/meteocon" --hidden-import=requests --no-console -n locale-master-win main.py`
+5. Or, on Windows: `pyinstaller.exe --onefile --add-data="assets/meteocon:assets/meteocon" --hidden-import=requests --noconsole -n locale-master-win main.py`
 
 ### Todos and issues
 - Build for Linux

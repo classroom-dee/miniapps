@@ -15,20 +15,21 @@ from helpers import fetch_current_weather, geocode_city
 
 
 class Row(tk.Frame):
-    def __init__(self, master, city, font, icon_path, *args, **kwargs):
+    def __init__(self, master, city, font, cfg: dict, *args, **kwargs):
         super().__init__(master, bg="#111111", *args, **kwargs)
+        self.cfg = cfg
+        self.cfg.setdefault("weather_cache", {})
         self.city = city
         self.font = font
+        self.fetching = False
         self.icon_img = None
-        self.icon_dir = icon_path
+        self.icon_dir = cfg["icon_path"]
         left = tk.Frame(self, bg="#111111")
         right = tk.Frame(self, bg="#111111")
         self.name_lbl = tk.Label(self, text="", font=font, fg="#eaeaea", bg="#111111")
         self.temp_lbl = tk.Label(self, text="", font=font, fg="#bdbdbd", bg="#111111")
         self.icon_lbl = tk.Label(self, fg="#eaeaea", bg="#111111")
         self.time_lbl = tk.Label(self, text="", font=font, fg="#eaeaea", bg="#111111")
-
-        # self.icon_lbl.config(width=2, anchor="center")
 
         left.pack(side="left", fill="x", expand=True)
         right.pack(side="right")
@@ -39,38 +40,9 @@ class Row(tk.Frame):
         self.icon_lbl.pack(in_=right, side="left", padx=(0, 6))
         self.time_lbl.pack(in_=right, side="left", padx=(0, 8))
 
-        # Tooltip-like label for city name on hover
-        # self.bindings_for_hover(self.time_lbl)
-        # self.bindings_for_hover(self.icon_lbl)
-        # self.bindings_for_hover(self.temp_lbl)
-        # self.tooltip = None
-
         self.weather_icon = "…"
         self.temperature = None
         self.last_weather_fetch = datetime.min
-
-    # def bindings_for_hover(self, widget):
-    #     widget.bind("<Enter>", self.show_tooltip)
-    #     widget.bind("<Leave>", self.hide_tooltip)
-
-    # def show_tooltip(self, _e=None):
-    #     if self.tooltip:
-    #         return
-    #     self.tooltip = tk.Toplevel(self)
-    #     self.tooltip.overrideredirect(True)
-    #     self.tooltip.attributes("-topmost", True)
-    #     self.tooltip.configure(bg="#222222")
-    #     lbl = tk.Label(self.tooltip, text=self.city["name"], fg="#ffffff", bg="#222222")
-    #     lbl.pack(padx=6, pady=3)
-    #     # Position near the row
-    #     x = self.winfo_rootx() + 10
-    #     y = self.winfo_rooty() - 24
-    #     self.tooltip.geometry(f"+{x}+{y}")
-
-    # def hide_tooltip(self, _e=None):
-    #     if self.tooltip:
-    #         self.tooltip.destroy()
-    #         self.tooltip = None
 
     def update_time(self, use_24h=True):
         now = datetime.now(ZoneInfo(self.city["tz"]))
@@ -87,25 +59,32 @@ class Row(tk.Frame):
     def maybe_update_weather(
         self, min_interval=timedelta(minutes=10)
     ):  # runs on main thread
+        if self.fetching:
+            return
         if datetime.now() - self.last_weather_fetch < min_interval:
             return
 
         def worker():  # bg thread
+            self.fetching = True
+
             result = fetch_current_weather(
                 self.city["lat"],
                 self.city["lon"],
                 self.city["tz"],
                 self.icon_dir,
-                cache=self.master.cfg["weather_cache"],
+                cache=self.cfg["weather_cache"],
             )
             if not result:
+                self.after(0, lambda: setattr(self, "fetching", False))
                 return
+            
             icon, temp = result
 
             def apply():  # UI must be handled by main
                 self.icon_img = tk.PhotoImage(file=icon)
                 self.temperature = temp
                 self.last_weather_fetch = datetime.now()
+                self.fetching = False
 
             self.after(0, apply)  # scheduled to be on the tk main loop
 
@@ -200,7 +179,7 @@ class Widget(tk.Tk):
         self.rows = []
 
         for city in self.cfg["cities"]:
-            row = Row(self.container, city, self.font, self.cfg["icon_path"])
+            row = Row(self.container, city, self.font, self.cfg)
             row.pack(fill="x", pady=2)
             self.rows.append(row)
 

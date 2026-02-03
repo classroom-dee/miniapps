@@ -60,8 +60,9 @@ def fetch_current_weather(lat, lon, tz, icon_dir, cache=None):
     key = f"{lat},{lon}"
 
     if cache and key in cache:
-        ts, icon, temp = cache[key]
-        if datetime.now() - ts < timedelta(minutes=10):
+        ts_str, icon, temp = cache[key]
+        # TTL check
+        if datetime.now() - datetime.fromisoformat(ts_str) < timedelta(minutes=10):
             return icon, temp
 
     url = (
@@ -81,7 +82,7 @@ def fetch_current_weather(lat, lon, tz, icon_dir, cache=None):
         temp = cw.get("temperature")
 
         if cache is not None:
-            cache[key] = (datetime.now(), icon, temp)
+            cache[key] = (datetime.now().isoformat(timespec="seconds"), icon, temp)
 
         return icon, temp
 
