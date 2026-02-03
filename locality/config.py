@@ -4,6 +4,7 @@
 
 import os
 import json
+import sys
 from pathlib import Path
 
 APP_NAME = "locale_master"
@@ -17,8 +18,11 @@ DEFAULT_CITIES = [
 
 
 def get_asset_path():
-    proj_path = Path(__file__).resolve().parent
-    return os.path.join(os.path.join(proj_path, "assets"), "meteocon")
+    if getattr(sys, "frozen", False):
+        base = sys._MEIPASS  # pyinstaller specific path
+    else:
+        base = Path(__file__).resolve().parent
+    return os.path.join(base, "assets", "meteocon")
 
 
 def load_config():
@@ -34,7 +38,7 @@ def load_config():
         "cities": DEFAULT_CITIES,
         "format_24h": True,
         "weather_cache": {},  # code->icon cache & per-city timestamps
-        "icon_path": get_asset_path(),
+        "icon_path": None,
     }
 
 

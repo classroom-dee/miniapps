@@ -18,7 +18,7 @@
 
 ### Build
 **In windows, your Python must be built with Tcl/Tk, i.e., Python from the MS Store**
-**For Linux, install python with python3-tk(Debian)**
+**For Linux, install python with python3-tk(Debian) -> Desktop versions seem to include this**
 1. Clone this, make a disposable env `python -m venv .venv` and then `source .venv/bin/activate` or `.venv\Scripts\activate.bat` in Windows
 2. `pip install pyinstaller`
 3. `cd locality`
@@ -26,8 +26,7 @@
 5. Or, on Windows: `pyinstaller.exe --onefile --add-data="assets/meteocon:assets/meteocon" --hidden-import=requests --no-console -n locale-master-win main.py`
 
 ### Todos and issues
-- Temp and icon not showing due to API rate limit (Can't be helped! 😔) -> Per row update is not viable -> use cache
-- Build from tk-enabled python (for Linux)
+- Build for Linux
 
 ### Acknowledgement
 Weather icons from [**Meteocons** by Bas Milius](https://github.com/basmilius/weather-icons)

@@ -4,7 +4,7 @@
 
 import sys
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 try:
     import requests
@@ -53,23 +53,38 @@ def get_full_icon_path(weather_code, icon_dir, extension=".png"):
     return full_path
 
 
-def fetch_current_weather(lat, lon, tz, icon_dir):
+def fetch_current_weather(lat, lon, tz, icon_dir, cache=None):
     """
     Returns (weather_icon, temperature_c) using Open-Meteo. May raise requests exceptions.
     """
+    key = f"{lat},{lon}"
+
+    if cache and key in cache:
+        ts, icon, temp = cache[key]
+        if datetime.now() - ts < timedelta(minutes=10):
+            return icon, temp
+
     url = (
         "https://api.open-meteo.com/v1/forecast?"
         f"latitude={lat}&longitude={lon}&current_weather=true&timezone={tz}"
     )
+
     try:
         r = requests.get(url, timeout=8)
         r.raise_for_status()
         data = r.json()
         cw = data.get("current_weather", {})
-        code = cw.get("weathercode")
+
+        icon = get_full_icon_path(
+            cw.get("weathercode"), icon_dir
+        )  # must return full path
         temp = cw.get("temperature")
-        icon = get_full_icon_path(code, icon_dir)  # must return full path
+
+        if cache is not None:
+            cache[key] = (datetime.now(), icon, temp)
+
         return icon, temp
+
     except Exception as e:
         log(f"Something went wrong: {e}")
         return
@@ -96,12 +111,19 @@ def geocode_city(name):
         if it.get("country"):
             display += f", {it['country']}"
         tz = it.get("timezone")
-        return {"name": display, "lat": it["latitude"], "lon": it["longitude"], "tz": tz}
+        return {
+            "name": display,
+            "lat": it["latitude"],
+            "lon": it["longitude"],
+            "tz": tz,
+        }
     except Exception as e:
         log(f"Something went wrong: {e}")
         return
 
+
 LOG_FILE = "locale-master.log"
+
 
 def log(msg):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

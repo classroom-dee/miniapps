@@ -10,7 +10,7 @@ from zoneinfo import ZoneInfo
 import tkinter as tk
 from tkinter import simpledialog, messagebox
 
-from config import save_config
+from config import save_config, get_asset_path
 from helpers import fetch_current_weather, geocode_city
 
 
@@ -84,21 +84,42 @@ class Row(tk.Frame):
         else:
             self.temp_lbl.config(text=f"{round(self.temperature)}°C")
 
-    def maybe_update_weather(self, min_interval=timedelta(minutes=30)):
+    def maybe_update_weather(
+        self, min_interval=timedelta(minutes=10)
+    ):  # runs on main thread
         if datetime.now() - self.last_weather_fetch < min_interval:
             return
 
-        def worker():
-            try:
-                icon, temp = fetch_current_weather(
-                    self.city["lat"], self.city["lon"], self.city["tz"], self.icon_dir
-                )
+        def worker():  # bg thread
+            result = fetch_current_weather(
+                self.city["lat"],
+                self.city["lon"],
+                self.city["tz"],
+                self.icon_dir,
+                cache=self.master.cfg["weather_cache"],
+            )
+            if not result:
+                return
+            icon, temp = result
+
+            def apply():  # UI must be handled by main
                 self.icon_img = tk.PhotoImage(file=icon)
                 self.temperature = temp
                 self.last_weather_fetch = datetime.now()
-            except Exception:
-                # Leave previous icon/temp; try again later
-                pass
+
+            self.after(0, apply)  # scheduled to be on the tk main loop
+
+            # # This runs UI job directly in the back -> cpu spike
+            # try:
+            #     icon, temp = fetch_current_weather(
+            #         self.city["lat"], self.city["lon"], self.city["tz"], self.icon_dir
+            #     )
+            #     self.icon_img = tk.PhotoImage(file=icon)
+            #     self.temperature = temp
+            #     self.last_weather_fetch = datetime.now()
+            # except Exception:
+            #     # Leave previous icon/temp; try again later
+            #     pass
 
         threading.Thread(target=worker, daemon=True).start()
 
@@ -107,6 +128,9 @@ class Widget(tk.Tk):
     def __init__(self, cfg):
         super().__init__()
         self.cfg = cfg
+        self.cfg["icon_path"] = (
+            get_asset_path()
+        )  # do this at runtime, don't store it in config!!
 
         # Window setup
         self.overrideredirect(True)  # borderless
@@ -274,4 +298,4 @@ class Widget(tk.Tk):
         for r in self.rows:
             r.update_time(use_24h=self.cfg.get("format_24h", True))
             r.maybe_update_weather(min_interval=timedelta(minutes=10))
-        self.after(500, self.update_loop)
+        self.after(5000, self.update_loop)
