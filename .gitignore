@@ -1,3 +1,4 @@
+**/__pycache__
 .env
 .venv
 
@@ -8,3 +9,6 @@ locality/dist/locale-master-win.exe
 
 # test logs
 locality/dist/locale-master.log
+
+# music gen artifacts
+music-gen/out/**
