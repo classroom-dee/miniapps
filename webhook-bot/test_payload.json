@@ -1,0 +1,30 @@
+{
+  "message": {
+    "username": "MyyBot-Dev",
+    "avatar_url": "https://imgur.com/9dMt3CO",
+    "content": "The Ecosystem",
+    "embeds": [
+      {
+        "title": "Build Successful",
+        "description": "Cloudflare Worker → Discord is operational.",
+        "color": 3066993,
+        "fields": [
+          {
+            "name": "Environment",
+            "value": "Production",
+            "inline": true
+          },
+          {
+            "name": "Triggered By",
+            "value": "curl test",
+            "inline": true
+          }
+        ],
+        "footer": {
+          "text": "Webhook Bot System"
+        },
+        "timestamp": "2026-02-18T14:55:00Z"
+      }
+    ]
+  }
+}
