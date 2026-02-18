@@ -10,9 +10,10 @@ export default {
 
     const data = await request.json();
 
-    const discordPayload = {
-      content: data.message || "No message provided"
-    };
+    const discordPayload = 
+      typeof data.message === "object"
+        ? data.message
+        : { content: data.message || "No message provided" }
 
     const response = await fetch(env.DISCORD_WEBHOOK_URL, {
       method: "POST",
