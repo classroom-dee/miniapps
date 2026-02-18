@@ -15,6 +15,8 @@ export default {
         ? data.message
         : { content: data.message || "No message provided" }
 
+    console.log("Forwarding:", JSON.stringify(discordPayload));
+
     const response = await fetch(env.DISCORD_WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -22,7 +24,11 @@ export default {
     });
 
     if (!response.ok) {
-      return new Response("Failed to send to Discord", { status: 500 });
+      const errorText = await response.text();
+      return new Response(errorText, {
+        status: response.status,
+        headers: { "Content-Type": "application/json" }
+      });
     }
 
     return new Response("Message forwarded", { status: 200 });
