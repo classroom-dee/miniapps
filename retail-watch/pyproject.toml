@@ -1,0 +1,16 @@
+[project]
+name = "retail-watch"
+version = "0.1.0"
+description = "Yes"
+requires-python = ">=3.12"
+
+dependencies = [
+    "pydantic",
+    "sqlalchemy",
+    "fastapi[standard]",
+    "uvicorn",
+    "cachetools"
+]
+
+[tool.ruff]
+line-length = 88

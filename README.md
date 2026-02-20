@@ -7,3 +7,5 @@
 |[Robot?](https://github.com/classroom-dee/miniapps/tree/main/robot)|❌|❌|A small pygame project from a course assignment|
 |[Files Converter](https://github.com/classroom-dee/miniapps/tree/main/file-converter)|✔️|❌|Converts files to other format|
 |[Score Generator](https://github.com/classroom-dee/miniapps/tree/main/music-gen)|❌|❌|Dynamically generates bars and outputs to standard xml format|
+|[Webhook Bot](https://github.com/classroom-dee/miniapps/tree/main/webhook-bot)|✔️|❌|Discord webhook bot on Cloudflare(Not a gateway bot)|
+|[HW Retail Watcher](https://github.com/classroom-dee/miniapps/tree/main/retail-watch)|✔️|❌|Retail price watcher for PC parts|
