@@ -1,9 +1,14 @@
+import asyncio
 import re
 import time
 
 import httpx
 from bs4 import BeautifulSoup
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 
+from app.models.base import Item
+from app.models.session import _session_context
 from app.schemas.search import SearchResultList
 
 # ------------------- CONFIGS -------------------
@@ -64,11 +69,12 @@ async def get_search_result(
         # prod price
         span_wrapper = row.find("span", class_="prod_price")
         if span_wrapper:
-            product_price = "".join(span_wrapper.get_text(strip=True).split(","))
+            product_price = span_wrapper.get_text(strip=True).replace(",", "")
 
         search_results.append(
             {
                 "id": product_id,
+                "category": category,
                 "name": product_name,
                 "price": product_price,
                 "link": f"{link_url_base}{product_id}",
@@ -77,3 +83,39 @@ async def get_search_result(
         )
 
     return SearchResultList(results=search_results)
+
+
+# NOTE: Use its own thread!!! dont pass main thread sessions!!
+async def get_refreshed_results(
+    db: Session, session: httpx.AsyncClient, user_id: str | None = None, rate_limit=3
+) -> SearchResultList:
+    """
+    user_id: for debugging
+    """
+    statement = select(Item)
+    if user_id:
+        statement = statement.where(Item.user_id == user_id)
+    items: list[Item] = db.scalars(statement).all()
+
+    SP = asyncio.Semaphore(rate_limit)
+
+    async def refresh_item(item: Item):
+        async with SP:
+            res = await get_search_result(session, item.category, item.name)
+            return [
+                r for r in res.results if r.id == item.prod_id and r.name == item.name
+            ]
+
+    results = await asyncio.gather(*(refresh_item(item) for item in items))
+
+    flattened = [r for sublist in results for r in sublist]
+    return SearchResultList(results=flattened)
+
+
+async def scheduler():
+    while True:
+        async with httpx.AsyncClient() as session:
+            with _session_context() as db:
+                await get_refreshed_results(db, session)
+
+        await asyncio.sleep(1800)

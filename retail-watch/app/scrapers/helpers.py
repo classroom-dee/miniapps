@@ -33,7 +33,7 @@ from cachetools import TTLCache
 
 #     return decorator
 
-
+# Temp measure. Use Redis for multiple workers
 _cache = TTLCache(maxsize=256, ttl=600)
 _locks: dict[tuple, asyncio.Lock] = {}
 

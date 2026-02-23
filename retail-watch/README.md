@@ -20,3 +20,10 @@
 ## Tracing
 - Decorator aggregator with context for lite telemetry
 - Rate limit
+
+# TODO
+- Pagination for search result
+- Use async DB
+- DONT RUN THE REFRESH ROUTINE ON HTTP SERVER WITH MULTIPLE WORKERS!!!! -> Separate scheduler service
+- SPA! 
+- Separate project? (this is getting bigger)

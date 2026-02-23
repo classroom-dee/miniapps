@@ -9,6 +9,7 @@ from app.scrapers.search import get_search_result
 router = APIRouter()
 
 
+# User faced
 @router.get("/search", response_model=SearchResultList)
 async def get_result(
     category: str, keyword: str, session: httpx.AsyncClient = Depends(get_session)
@@ -20,7 +21,8 @@ async def get_result(
     )
 
 
+# not for periodic collection!!
 @router.get("/search/exact/{id}")
-async def get_product(id: int):
+async def get_product(id: int, session: httpx.AsyncClient = Depends(get_session)):
     # fetch from the mall
     return "Result!"
