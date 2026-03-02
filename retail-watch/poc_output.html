@@ -1,0 +1,2471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+<form name="productForm" id="productForm">
+	<input type="hidden" id="goodsCount" value="1165" />
+	<input type="hidden" name="orderbyList" value="1|2" />
+	<input type="hidden" name="page" value="1" />
+	<input type="hidden" name="minPrice" value="0" />
+	<input type="hidden" name="maxPrice" value="0" />
+		</form>
+
+<!-- text_img_view absolute_prod -->
+<div class="text_img_view">
+	<!-- category_list -->
+	<div class="category_list">
+		<ul>
+					<li class="first select"><a href="" onclick="estimateMainProduct.sort('1|2'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','정렬탭_인기상품순');">인기상품순</a></li>
+					<li class=""><a href="" onclick="estimateMainProduct.sort('2|2'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','정렬탭_신상품순');">신상품순</a></li>
+					<li class=""><a href="" onclick="estimateMainProduct.sort('3|1'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','정렬탭_낮은 가격순');">낮은 가격순</a></li>
+					<li class=""><a href="" onclick="estimateMainProduct.sort('3|2'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','정렬탭_높은 가격순');">높은 가격순</a></li>
+					<li class=""><a href="" onclick="estimateMainProduct.sort('4|1'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','정렬탭_상품명순');">상품명순</a></li>
+				</ul>
+
+		<div class="search-detail">
+			<button class="btn__search-detail" id="searchDetailButton" onmousedown="gtagSend('PC견적메인','결과내검색', '클릭');">결과 내 검색</button>
+			<div class="layer-basic layer__search-detail hide" id="searchDetailLayer">
+				<div class="layer-basic__header">
+					<div class="layer-basic__title">결과 내 검색</div>
+				</div>
+				<div class="layer-basic__contents">
+					<div class="search-filter__title">
+						결과 내 키워드
+												<div class="question-tooltip" tabindex="0">
+							<div class="question-tooltip__icon"><span class="blind">설명보기</span><span aria-hidden="true">?</span></div>
+							<div class="question-tooltip__layer type--opposite">
+								<div class="inner">
+									<p class="con">
+										- 제조사, 상품명, 사양정보 등 키워드를<br>
+										&nbsp;&nbsp;포함하거나 제외할 수 있습니다.<br>
+										- 포함/제외 키워드는 3개씩 적용 가능합니다.
+									</p>
+								</div>
+							</div>
+						</div>
+											</div>
+										<div class="search-filter__title--sub">포함</div>
+					<div class="search-filter__word">
+						<input type="text" class="input__default" title="검색 키워드" placeholder="여러 단어일 경우 쉼표로 구분하세요." value="" id="includeText" />
+						<button class="btn__input-clear"><span class="blind">검색어 삭제</span></button>
+					</div>
+					<div class="search-filter__title--sub">제외</div>
+					<div class="search-filter__word">
+						<input type="text" class="input__default" title="검색 키워드" placeholder="여러 단어일 경우 쉼표로 구분하세요." value="" id="excludeText" />
+						<button class="btn__input-clear"><span class="blind">검색어 삭제</span></button>
+					</div>
+					
+					<div class="search-filter__title">가격대 검색</div>
+					<div class="search-filter__price-button">
+											<button class="btn__price-filter" min="0" max="99999">10만원 이하</button>
+											<button class="btn__price-filter" min="100000" max="219999">10만원~22만원</button>
+											<button class="btn__price-filter" min="220000" max="359999">22만원~36만원</button>
+											<button class="btn__price-filter" min="360000" max="579999">36만원~58만원</button>
+											<button class="btn__price-filter" min="580000" max="999999990">58만원 이상</button>
+										</div>
+					<div class="search-filter__price-input ">
+						<div class="price-input"><input type="text" class="input__default" title="검색될 최소 가격 입력" value="" id="minPrice" placeholder="0" /><span class="won">원</span></div>
+						<div class="price-dash">~</div>
+						<div class="price-input"><input type="text" class="input__default" title="검색될 최대 가격 입력" value="" id="maxPrice" placeholder="999999990" /><span class="won">원</span></div>
+					</div>
+					<div class="search-filter__btn">
+						<button class="btn__layer--small btn-layer--confirm" id="initSearchDetail" onmousedown="gtagSend('PC견적메인','결과내검색','초기화');">초기화</button>
+						<button class="btn__layer--small btn-layer--cancel" id="submitSearchDetail" onmousedown="trackSearchDetailApply()">적용</button>
+					</div>
+				</div>
+				<button class="btn-close--layer" onmousedown="gtagSend('PC견적메인','결과내검색','닫기');">레이어 닫기</button>
+			</div>
+		</div>
+	</div>
+	<!--// category_list -->
+
+	<!-- list_tbl_wrap admd_tbl_wrap -->
+	<div class="list_tbl_wrap admd_tbl_wrap estimate_renew_list"><!-- 애드리더 or MD 추천 상품이 있을 경우 -->
+		<div class="scroll_box">
+		
+			<table class="tbl_list">
+				<caption>상품에 대한 품목 및 최저가에 대한 리스트입니다.</caption>
+				<colgroup>
+					<col class="goods_img" />
+					<col class="title_price" />
+					<col class="rig_line" />
+				</colgroup>
+				<thead>
+					<tr class="web_hidden">
+						<th scope="col" class="goods_img">상품</th>
+						<th scope="col" class="title_price">품목</th>
+						<th scope="col" class="rig_line">선택</th>
+					</tr>
+				</thead>
+				<tbody>
+									<tr class="productList_70531547">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/547/531/img/70531547_1.jpg" alt="AMD 라이젠7-6세대 9800X3D (그래니트 릿지) (멀티팩 정품)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(70531547, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_70531547');">AMD 라이젠7-6세대 9800X3D (그래니트 릿지) (멀티팩 정품)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">AMD(소켓AM5) / 8코어 / 16스레드 / 메모리 규격:DDR5 / 내장그래픽:탑재 / 6세대(Zen5) / TSMC 4nm / 기본 클럭:4.7GHz / 최대 클럭:5.2GHz / L2 캐시:8MB / L3 캐시:96MB / TDP:120W / PCIe5.0 / 5600MHz / AMD 라데온 그래픽 / 기술 지원:SMT(하이퍼스레딩);AMD Ryzen Master;AMD 3D V캐시 / 쿨러:미포함 / 시네벤치R23(싱글):2073 / 시네벤치R23(멀티):23334</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>AMD(소켓AM5) / 8코어 / 16스레드 / 메모리 규격:DDR5 / 내장그래픽:탑재 / 6세대(Zen5) / TSMC 4nm / 기본 클럭:4.7GHz / 최대 클럭:5.2GHz / L2 캐시:8MB / L3 캐시:96MB / TDP:120W / PCIe5.0 / 5600MHz / AMD 라데온 그래픽 / 기술 지원:SMT(하이퍼스레딩);AMD Ryzen Master;AMD 3D V캐시 / 쿨러:미포함 / 시네벤치R23(싱글):2073 / 시네벤치R23(멀티):23334</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																												<!--2018-01 ninety_help -->
+										<div class="ninety_help"  tabindex="0">
+											<span class="icon_style" aria-describedby="tipNinetyPlus70531547">세이프업+</span>
+											<!--170719 정보접근성 id와 aria-describedby이 같도록 해주세요. role 그대로 적용  -->
+											<div class="layer_safeup_plus" id="tipNinetyPlus70531547" role="tooltip">
+												<span class="arrw"></span>
+												<p class="layer_notice_title">세이프업플러스란?</p>
+												<p class="safeup_plus_txt">세이프업플러스가 적용된 제품은<br> 제조사 공식 AS기간 외 다나와가 추가로<br> 보증해주는 서비스입니다.</p>
+												<ul class="safeup_plus_cont">
+													<li>- 정식 제조/수입사 제품 보증</li>
+													<li>- 구매 후 1개월내 불량 발생 시 다이렉트 교체</li>
+													<li>- 제조사 공식 AS보증기간 외 추가 보장<br/>&nbsp;*CPU 2년 / 메모리 4년 / SSD 90일 / 메인보드 90일</li>
+													<li>- 보증기간 내 제조사 AS불가시 다나와가 AS지원</li>
+												</ul>
+											</div>
+										</div>
+										<!--// ninety_help -->
+																		</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(70531547, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_70531547');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																					<p class="event">
+								<span class="event_txt">이벤트</span>
+								<a href="/virtualestimate/?controller=info&methods=vEstimateEvent&marketPlaceSeq=16&eventCategorySeq=12750" target="_blank" onmousedown="gtagSend('PC견적메인','상품리스트','이벤트_70531547');">구매 시 붉은사막 게임 선착순 증정!</a>
+							</p>
+													</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 719,400</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="873" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="873" />
+							<input type="hidden" name="categorySeq3" value="960" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="AMD 라이젠7-6세대 9800X3D (그래니트 릿지) (멀티팩 정품)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="70531547" />
+							<input type="hidden" name="price" value="719400" />
+							<input type="hidden" name="cardPrice" value="741840" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="구매 시 붉은사막 게임 선착순 증정!" />
+							<input type="hidden" name="eventUrl" value="/virtualestimate/?controller=info&methods=vEstimateEvent&marketPlaceSeq=16&eventCategorySeq=12750" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_18965774">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/774/965/img/18965774_1.jpg" alt="ESSENCORE KLEVV DDR5-5600 CL46 파인인포 (16GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(18965774, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_18965774');">ESSENCORE KLEVV DDR5-5600 CL46 파인인포 (16GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-46-46-90 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 높이:31.25mm / 모듈제조사:SK하이닉스 / A다이 언락</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-46-46-90 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 높이:31.25mm / 모듈제조사:SK하이닉스 / A다이 언락</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(18965774, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_18965774');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 350,980</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="ESSENCORE KLEVV DDR5-5600 CL46 파인인포 (16GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="18965774" />
+							<input type="hidden" name="price" value="350980" />
+							<input type="hidden" name="cardPrice" value="360640" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_16741211">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/211/741/img/16741211_1.jpg" alt="AMD 라이젠5-4세대 5600 (버미어) (멀티팩 정품)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(16741211, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_16741211');">AMD 라이젠5-4세대 5600 (버미어) (멀티팩 정품)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">AMD(소켓AM4) / 6코어 / 12스레드 / 메모리 규격:DDR4 / 내장그래픽:미탑재 / 4세대(Zen3) / 7nm / 기본 클럭:3.5GHz / 최대 클럭:4.4GHz / L2 캐시:3MB / L3 캐시:32MB / TDP:65W / PCIe4.0 / 3200MHz / 기술 지원:SMT(하이퍼스레딩);StoreMI;AMD Ryzen Master;VR Ready 프리미엄 / 쿨러:Wraith Stealth 포함 / 시네벤치R23(싱글):1460 / 시네벤치R23(멀티):10906</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>AMD(소켓AM4) / 6코어 / 12스레드 / 메모리 규격:DDR4 / 내장그래픽:미탑재 / 4세대(Zen3) / 7nm / 기본 클럭:3.5GHz / 최대 클럭:4.4GHz / L2 캐시:3MB / L3 캐시:32MB / TDP:65W / PCIe4.0 / 3200MHz / 기술 지원:SMT(하이퍼스레딩);StoreMI;AMD Ryzen Master;VR Ready 프리미엄 / 쿨러:Wraith Stealth 포함 / 시네벤치R23(싱글):1460 / 시네벤치R23(멀티):10906</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																												<!--2018-01 ninety_help -->
+										<div class="ninety_help"  tabindex="0">
+											<span class="icon_style" aria-describedby="tipNinetyPlus16741211">세이프업+</span>
+											<!--170719 정보접근성 id와 aria-describedby이 같도록 해주세요. role 그대로 적용  -->
+											<div class="layer_safeup_plus" id="tipNinetyPlus16741211" role="tooltip">
+												<span class="arrw"></span>
+												<p class="layer_notice_title">세이프업플러스란?</p>
+												<p class="safeup_plus_txt">세이프업플러스가 적용된 제품은<br> 제조사 공식 AS기간 외 다나와가 추가로<br> 보증해주는 서비스입니다.</p>
+												<ul class="safeup_plus_cont">
+													<li>- 정식 제조/수입사 제품 보증</li>
+													<li>- 구매 후 1개월내 불량 발생 시 다이렉트 교체</li>
+													<li>- 제조사 공식 AS보증기간 외 추가 보장<br/>&nbsp;*CPU 2년 / 메모리 4년 / SSD 90일 / 메인보드 90일</li>
+													<li>- 보증기간 내 제조사 AS불가시 다나와가 AS지원</li>
+												</ul>
+											</div>
+										</div>
+										<!--// ninety_help -->
+																		</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(16741211, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_16741211');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 197,840</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="873" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="873" />
+							<input type="hidden" name="categorySeq3" value="960" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="AMD 라이젠5-4세대 5600 (버미어) (멀티팩 정품)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="16741211" />
+							<input type="hidden" name="price" value="197840" />
+							<input type="hidden" name="cardPrice" value="206920" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_18911780">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/780/911/img/18911780_1.jpg" alt="삼성전자 DDR5-5600 (16GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(18911780, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_18911780');">삼성전자 DDR5-5600 (16GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램개수:1개 / 히트싱크:미포함 / 모듈제조사:삼성전자</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램개수:1개 / 히트싱크:미포함 / 모듈제조사:삼성전자</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(18911780, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_18911780');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 349,310</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="삼성전자 DDR5-5600 (16GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="18911780" />
+							<input type="hidden" name="price" value="349310" />
+							<input type="hidden" name="cardPrice" value="361910" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_62794082">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/082/794/img/62794082_1.jpg" alt="AMD 라이젠7-6세대 9700X (그래니트 릿지) (멀티팩 정품)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(62794082, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_62794082');">AMD 라이젠7-6세대 9700X (그래니트 릿지) (멀티팩 정품)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">AMD(소켓AM5) / 8코어 / 16스레드 / 메모리 규격:DDR5 / 내장그래픽:탑재 / 6세대(Zen5) / TSMC 4nm / 기본 클럭:3.8GHz / 최대 클럭:5.5GHz / L2 캐시:8MB / L3 캐시:32MB / TDP:65W / PPT:88W / PCIe5.0 / 5600MHz / AMD 라데온 그래픽 / 기술 지원:SMT(하이퍼스레딩);AMD Ryzen Master / 쿨러:Wraith Stealth 포함 / 시네벤치R23(싱글):2260 / 시네벤치R23(멀티):21436</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>AMD(소켓AM5) / 8코어 / 16스레드 / 메모리 규격:DDR5 / 내장그래픽:탑재 / 6세대(Zen5) / TSMC 4nm / 기본 클럭:3.8GHz / 최대 클럭:5.5GHz / L2 캐시:8MB / L3 캐시:32MB / TDP:65W / PPT:88W / PCIe5.0 / 5600MHz / AMD 라데온 그래픽 / 기술 지원:SMT(하이퍼스레딩);AMD Ryzen Master / 쿨러:Wraith Stealth 포함 / 시네벤치R23(싱글):2260 / 시네벤치R23(멀티):21436</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																												<!--2018-01 ninety_help -->
+										<div class="ninety_help"  tabindex="0">
+											<span class="icon_style" aria-describedby="tipNinetyPlus62794082">세이프업+</span>
+											<!--170719 정보접근성 id와 aria-describedby이 같도록 해주세요. role 그대로 적용  -->
+											<div class="layer_safeup_plus" id="tipNinetyPlus62794082" role="tooltip">
+												<span class="arrw"></span>
+												<p class="layer_notice_title">세이프업플러스란?</p>
+												<p class="safeup_plus_txt">세이프업플러스가 적용된 제품은<br> 제조사 공식 AS기간 외 다나와가 추가로<br> 보증해주는 서비스입니다.</p>
+												<ul class="safeup_plus_cont">
+													<li>- 정식 제조/수입사 제품 보증</li>
+													<li>- 구매 후 1개월내 불량 발생 시 다이렉트 교체</li>
+													<li>- 제조사 공식 AS보증기간 외 추가 보장<br/>&nbsp;*CPU 2년 / 메모리 4년 / SSD 90일 / 메인보드 90일</li>
+													<li>- 보증기간 내 제조사 AS불가시 다나와가 AS지원</li>
+												</ul>
+											</div>
+										</div>
+										<!--// ninety_help -->
+																		</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(62794082, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_62794082');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 444,720</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="873" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="873" />
+							<input type="hidden" name="categorySeq3" value="960" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="AMD 라이젠7-6세대 9700X (그래니트 릿지) (멀티팩 정품)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="62794082" />
+							<input type="hidden" name="price" value="444720" />
+							<input type="hidden" name="cardPrice" value="459820" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_14927675">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/675/927/img/14927675_1.jpg" alt="AMD 라이젠5-4세대 5600G (세잔) (멀티팩 정품)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(14927675, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_14927675');">AMD 라이젠5-4세대 5600G (세잔) (멀티팩 정품)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">AMD(소켓AM4) / 6코어 / 12스레드 / 메모리 규격:DDR4 / 내장그래픽:탑재 / 4세대(Zen3) / 7nm / 기본 클럭:3.9GHz / 최대 클럭:4.4GHz / L2 캐시:3MB / L3 캐시:16MB / TDP:65W / PCIe3.0 / 3200MHz / AMD 라데온 그래픽 7 / 기술 지원:SMT(하이퍼스레딩);SenseMI;AMD Ryzen Master / 쿨러:Wraith Stealth 포함 / 시네벤치R23(싱글):1446 / 시네벤치R23(멀티):10489</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>AMD(소켓AM4) / 6코어 / 12스레드 / 메모리 규격:DDR4 / 내장그래픽:탑재 / 4세대(Zen3) / 7nm / 기본 클럭:3.9GHz / 최대 클럭:4.4GHz / L2 캐시:3MB / L3 캐시:16MB / TDP:65W / PCIe3.0 / 3200MHz / AMD 라데온 그래픽 7 / 기술 지원:SMT(하이퍼스레딩);SenseMI;AMD Ryzen Master / 쿨러:Wraith Stealth 포함 / 시네벤치R23(싱글):1446 / 시네벤치R23(멀티):10489</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																												<!--2018-01 ninety_help -->
+										<div class="ninety_help"  tabindex="0">
+											<span class="icon_style" aria-describedby="tipNinetyPlus14927675">세이프업+</span>
+											<!--170719 정보접근성 id와 aria-describedby이 같도록 해주세요. role 그대로 적용  -->
+											<div class="layer_safeup_plus" id="tipNinetyPlus14927675" role="tooltip">
+												<span class="arrw"></span>
+												<p class="layer_notice_title">세이프업플러스란?</p>
+												<p class="safeup_plus_txt">세이프업플러스가 적용된 제품은<br> 제조사 공식 AS기간 외 다나와가 추가로<br> 보증해주는 서비스입니다.</p>
+												<ul class="safeup_plus_cont">
+													<li>- 정식 제조/수입사 제품 보증</li>
+													<li>- 구매 후 1개월내 불량 발생 시 다이렉트 교체</li>
+													<li>- 제조사 공식 AS보증기간 외 추가 보장<br/>&nbsp;*CPU 2년 / 메모리 4년 / SSD 90일 / 메인보드 90일</li>
+													<li>- 보증기간 내 제조사 AS불가시 다나와가 AS지원</li>
+												</ul>
+											</div>
+										</div>
+										<!--// ninety_help -->
+																		</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(14927675, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_14927675');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 231,630</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="873" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="873" />
+							<input type="hidden" name="categorySeq3" value="960" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="AMD 라이젠5-4세대 5600G (세잔) (멀티팩 정품)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="14927675" />
+							<input type="hidden" name="price" value="231630" />
+							<input type="hidden" name="cardPrice" value="241830" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_62794079">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/079/794/img/62794079_1.jpg" alt="AMD 라이젠5-6세대 9600X (그래니트 릿지) (멀티팩 정품)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(62794079, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_62794079');">AMD 라이젠5-6세대 9600X (그래니트 릿지) (멀티팩 정품)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">AMD(소켓AM5) / 6코어 / 12스레드 / 메모리 규격:DDR5 / 내장그래픽:탑재 / 6세대(Zen5) / TSMC 4nm / 기본 클럭:3.9GHz / 최대 클럭:5.4GHz / L2 캐시:6MB / L3 캐시:32MB / TDP:65W / PPT:88W / PCIe5.0 / 5600MHz / AMD 라데온 그래픽 / 기술 지원:SMT(하이퍼스레딩) / 쿨러:Wraith Stealth 포함 / 시네벤치R23(싱글):2223 / 시네벤치R23(멀티):16998</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>AMD(소켓AM5) / 6코어 / 12스레드 / 메모리 규격:DDR5 / 내장그래픽:탑재 / 6세대(Zen5) / TSMC 4nm / 기본 클럭:3.9GHz / 최대 클럭:5.4GHz / L2 캐시:6MB / L3 캐시:32MB / TDP:65W / PPT:88W / PCIe5.0 / 5600MHz / AMD 라데온 그래픽 / 기술 지원:SMT(하이퍼스레딩) / 쿨러:Wraith Stealth 포함 / 시네벤치R23(싱글):2223 / 시네벤치R23(멀티):16998</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																												<!--2018-01 ninety_help -->
+										<div class="ninety_help"  tabindex="0">
+											<span class="icon_style" aria-describedby="tipNinetyPlus62794079">세이프업+</span>
+											<!--170719 정보접근성 id와 aria-describedby이 같도록 해주세요. role 그대로 적용  -->
+											<div class="layer_safeup_plus" id="tipNinetyPlus62794079" role="tooltip">
+												<span class="arrw"></span>
+												<p class="layer_notice_title">세이프업플러스란?</p>
+												<p class="safeup_plus_txt">세이프업플러스가 적용된 제품은<br> 제조사 공식 AS기간 외 다나와가 추가로<br> 보증해주는 서비스입니다.</p>
+												<ul class="safeup_plus_cont">
+													<li>- 정식 제조/수입사 제품 보증</li>
+													<li>- 구매 후 1개월내 불량 발생 시 다이렉트 교체</li>
+													<li>- 제조사 공식 AS보증기간 외 추가 보장<br/>&nbsp;*CPU 2년 / 메모리 4년 / SSD 90일 / 메인보드 90일</li>
+													<li>- 보증기간 내 제조사 AS불가시 다나와가 AS지원</li>
+												</ul>
+											</div>
+										</div>
+										<!--// ninety_help -->
+																		</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(62794079, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_62794079');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 340,080</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="873" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="873" />
+							<input type="hidden" name="categorySeq3" value="960" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="AMD 라이젠5-6세대 9600X (그래니트 릿지) (멀티팩 정품)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="62794079" />
+							<input type="hidden" name="price" value="340080" />
+							<input type="hidden" name="cardPrice" value="352560" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_18169169">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/169/169/img/18169169_1.jpg" alt="인텔 코어i5-13세대 13600K (랩터레이크) (벌크)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(18169169, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_18169169');">인텔 코어i5-13세대 13600K (랩터레이크) (벌크)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">인텔(소켓1700) / P6+E8코어 / 12+8스레드 / 메모리 규격:DDR5, DDR4 / 내장그래픽:탑재 / 10nm(인텔7) / 기본 클럭:3.5GHz / 최대 클럭:5.1GHz / L2 캐시:20MB / L3 캐시:24MB / PBP-MTP:125-181W / PCIe5.0, 4.0 / 5600, 3200MHz / 인텔 UHD 770 / 기술 지원:SMT(하이퍼스레딩);인텔 XTU;인텔 딥러닝부스트 / 쿨러:미포함</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>인텔(소켓1700) / P6+E8코어 / 12+8스레드 / 메모리 규격:DDR5, DDR4 / 내장그래픽:탑재 / 10nm(인텔7) / 기본 클럭:3.5GHz / 최대 클럭:5.1GHz / L2 캐시:20MB / L3 캐시:24MB / PBP-MTP:125-181W / PCIe5.0, 4.0 / 5600, 3200MHz / 인텔 UHD 770 / 기술 지원:SMT(하이퍼스레딩);인텔 XTU;인텔 딥러닝부스트 / 쿨러:미포함</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(18169169, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_18169169');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 289,180</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="873" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="873" />
+							<input type="hidden" name="categorySeq3" value="959" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="인텔 코어i5-13세대 13600K (랩터레이크) (벌크)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="18169169" />
+							<input type="hidden" name="price" value="289180" />
+							<input type="hidden" name="cardPrice" value="297140" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_77790914">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/914/790/img/77790914_1.jpg" alt="AMD 라이젠9-6세대 9950X3D (그래니트 릿지) (멀티팩 정품)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(77790914, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_77790914');">AMD 라이젠9-6세대 9950X3D (그래니트 릿지) (멀티팩 정품)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">AMD(소켓AM5) / 16코어 / 32스레드 / 메모리 규격:DDR5 / 내장그래픽:탑재 / 6세대(Zen5) / TSMC 4nm / 기본 클럭:4.3GHz / 최대 클럭:5.7GHz / L2 캐시:16MB / L3 캐시:128MB / TDP:170W / PCIe5.0 / 5600MHz / AMD 라데온 그래픽 / 기술 지원:SMT(하이퍼스레딩);AMD Ryzen Master;AMD 3D V캐시 / 쿨러:미포함 / 시네벤치R23(싱글):2242 / 시네벤치R23(멀티):42377</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>AMD(소켓AM5) / 16코어 / 32스레드 / 메모리 규격:DDR5 / 내장그래픽:탑재 / 6세대(Zen5) / TSMC 4nm / 기본 클럭:4.3GHz / 최대 클럭:5.7GHz / L2 캐시:16MB / L3 캐시:128MB / TDP:170W / PCIe5.0 / 5600MHz / AMD 라데온 그래픽 / 기술 지원:SMT(하이퍼스레딩);AMD Ryzen Master;AMD 3D V캐시 / 쿨러:미포함 / 시네벤치R23(싱글):2242 / 시네벤치R23(멀티):42377</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(77790914, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_77790914');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																					<p class="event">
+								<span class="event_txt">이벤트</span>
+								<a href="/virtualestimate/?controller=info&methods=vEstimateEvent&marketPlaceSeq=16&eventCategorySeq=12750" target="_blank" onmousedown="gtagSend('PC견적메인','상품리스트','이벤트_77790914');">구매 시 붉은사막 게임 선착순 증정!</a>
+							</p>
+													</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 1,036,800</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="873" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="873" />
+							<input type="hidden" name="categorySeq3" value="960" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="AMD 라이젠9-6세대 9950X3D (그래니트 릿지) (멀티팩 정품)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="77790914" />
+							<input type="hidden" name="price" value="1036800" />
+							<input type="hidden" name="cardPrice" value="1073290" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="구매 시 붉은사막 게임 선착순 증정!" />
+							<input type="hidden" name="eventUrl" value="/virtualestimate/?controller=info&methods=vEstimateEvent&marketPlaceSeq=16&eventCategorySeq=12750" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_71216363">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/363/216/img/71216363_1.jpg" alt="ESSENCORE KLEVV DDR5-5600 CL46 NEO 파인인포 (16GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(71216363, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_71216363');">ESSENCORE KLEVV DDR5-5600 CL46 NEO 파인인포 (16GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-46-46-90 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 높이:31.25mm / 모듈제조사:SK하이닉스</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-46-46-90 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 높이:31.25mm / 모듈제조사:SK하이닉스</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(71216363, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_71216363');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 352,000</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="ESSENCORE KLEVV DDR5-5600 CL46 NEO 파인인포 (16GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="71216363" />
+							<input type="hidden" name="price" value="352000" />
+							<input type="hidden" name="cardPrice" value="0" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_17535839">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/839/535/img/17535839_1.jpg" alt="TeamGroup DDR5-5600 CL46 Elite 서린 (16GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(17535839, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_17535839');">TeamGroup DDR5-5600 CL46 Elite 서린 (16GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-46-46-90 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 높이:32mm</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-46-46-90 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 높이:32mm</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(17535839, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_17535839');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 392,890</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="TeamGroup DDR5-5600 CL46 Elite 서린 (16GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="17535839" />
+							<input type="hidden" name="price" value="392890" />
+							<input type="hidden" name="cardPrice" value="404730" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_76555685">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/685/555/img/76555685_1.jpg" alt="인텔 코어i5-14세대 14600KF (랩터레이크 리프레시) (밸류팩 정품)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(76555685, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_76555685');">인텔 코어i5-14세대 14600KF (랩터레이크 리프레시) (밸류팩 정품)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">인텔(소켓1700) / P6+E8코어 / 12+8스레드 / 메모리 규격:DDR5, DDR4 / 내장그래픽:미탑재 / 10nm(인텔7) / 기본 클럭:3.5GHz / 최대 클럭:5.3GHz / L2 캐시:20MB / L3 캐시:24MB / PBP-MTP:125-181W / PCIe5.0, 4.0 / 5600, 3200MHz / 기술 지원:SMT(하이퍼스레딩);인텔 XTU;인텔 퀵싱크;인텔 딥러닝부스트 / 쿨러:미포함 / 시네벤치R23(싱글):2054 / 시네벤치R23(멀티):24086</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>인텔(소켓1700) / P6+E8코어 / 12+8스레드 / 메모리 규격:DDR5, DDR4 / 내장그래픽:미탑재 / 10nm(인텔7) / 기본 클럭:3.5GHz / 최대 클럭:5.3GHz / L2 캐시:20MB / L3 캐시:24MB / PBP-MTP:125-181W / PCIe5.0, 4.0 / 5600, 3200MHz / 기술 지원:SMT(하이퍼스레딩);인텔 XTU;인텔 퀵싱크;인텔 딥러닝부스트 / 쿨러:미포함 / 시네벤치R23(싱글):2054 / 시네벤치R23(멀티):24086</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																												<!--2018-01 ninety_help -->
+										<div class="ninety_help"  tabindex="0">
+											<span class="icon_style" aria-describedby="tipNinetyPlus76555685">세이프업+</span>
+											<!--170719 정보접근성 id와 aria-describedby이 같도록 해주세요. role 그대로 적용  -->
+											<div class="layer_safeup_plus" id="tipNinetyPlus76555685" role="tooltip">
+												<span class="arrw"></span>
+												<p class="layer_notice_title">세이프업플러스란?</p>
+												<p class="safeup_plus_txt">세이프업플러스가 적용된 제품은<br> 제조사 공식 AS기간 외 다나와가 추가로<br> 보증해주는 서비스입니다.</p>
+												<ul class="safeup_plus_cont">
+													<li>- 정식 제조/수입사 제품 보증</li>
+													<li>- 구매 후 1개월내 불량 발생 시 다이렉트 교체</li>
+													<li>- 제조사 공식 AS보증기간 외 추가 보장<br/>&nbsp;*CPU 2년 / 메모리 4년 / SSD 90일 / 메인보드 90일</li>
+													<li>- 보증기간 내 제조사 AS불가시 다나와가 AS지원</li>
+												</ul>
+											</div>
+										</div>
+										<!--// ninety_help -->
+																		</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(76555685, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_76555685');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 375,000</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="873" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="873" />
+							<input type="hidden" name="categorySeq3" value="959" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="인텔 코어i5-14세대 14600KF (랩터레이크 리프레시) (밸류팩 정품)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="76555685" />
+							<input type="hidden" name="price" value="375000" />
+							<input type="hidden" name="cardPrice" value="387040" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_28799654">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/654/799/img/28799654_1.jpg" alt="인텔 코어i5-14세대 14600K (랩터레이크 리프레시) (정품)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(28799654, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_28799654');">인텔 코어i5-14세대 14600K (랩터레이크 리프레시) (정품)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">인텔(소켓1700) / P6+E8코어 / 12+8스레드 / 메모리 규격:DDR5, DDR4 / 내장그래픽:탑재 / 10nm(인텔7) / 기본 클럭:3.5GHz / 최대 클럭:5.3GHz / L2 캐시:20MB / L3 캐시:24MB / PBP-MTP:125-181W / PCIe5.0, 4.0 / 5600, 3200MHz / 인텔 UHD 770 / 기술 지원:SMT(하이퍼스레딩);인텔 XTU;인텔 퀵싱크;인텔 딥러닝부스트 / 쿨러:미포함 / 시네벤치R23(싱글):2069 / 시네벤치R23(멀티):25159</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>인텔(소켓1700) / P6+E8코어 / 12+8스레드 / 메모리 규격:DDR5, DDR4 / 내장그래픽:탑재 / 10nm(인텔7) / 기본 클럭:3.5GHz / 최대 클럭:5.3GHz / L2 캐시:20MB / L3 캐시:24MB / PBP-MTP:125-181W / PCIe5.0, 4.0 / 5600, 3200MHz / 인텔 UHD 770 / 기술 지원:SMT(하이퍼스레딩);인텔 XTU;인텔 퀵싱크;인텔 딥러닝부스트 / 쿨러:미포함 / 시네벤치R23(싱글):2069 / 시네벤치R23(멀티):25159</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																												<!--2018-01 ninety_help -->
+										<div class="ninety_help"  tabindex="0">
+											<span class="icon_style" aria-describedby="tipNinetyPlus28799654">세이프업+</span>
+											<!--170719 정보접근성 id와 aria-describedby이 같도록 해주세요. role 그대로 적용  -->
+											<div class="layer_safeup_plus" id="tipNinetyPlus28799654" role="tooltip">
+												<span class="arrw"></span>
+												<p class="layer_notice_title">세이프업플러스란?</p>
+												<p class="safeup_plus_txt">세이프업플러스가 적용된 제품은<br> 제조사 공식 AS기간 외 다나와가 추가로<br> 보증해주는 서비스입니다.</p>
+												<ul class="safeup_plus_cont">
+													<li>- 정식 제조/수입사 제품 보증</li>
+													<li>- 구매 후 1개월내 불량 발생 시 다이렉트 교체</li>
+													<li>- 제조사 공식 AS보증기간 외 추가 보장<br/>&nbsp;*CPU 2년 / 메모리 4년 / SSD 90일 / 메인보드 90일</li>
+													<li>- 보증기간 내 제조사 AS불가시 다나와가 AS지원</li>
+												</ul>
+											</div>
+										</div>
+										<!--// ninety_help -->
+																		</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(28799654, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_28799654');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 396,880</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="873" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="873" />
+							<input type="hidden" name="categorySeq3" value="959" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="인텔 코어i5-14세대 14600K (랩터레이크 리프레시) (정품)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="28799654" />
+							<input type="hidden" name="price" value="396880" />
+							<input type="hidden" name="cardPrice" value="407880" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_20369126">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/126/369/img/20369126_1.jpg" alt="마이크론 Crucial DDR5-5600 CL46 대원씨티에스 (16GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(20369126, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_20369126');">마이크론 Crucial DDR5-5600 CL46 대원씨티에스 (16GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-45-45 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 모듈제조사:마이크론</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-45-45 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 모듈제조사:마이크론</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(20369126, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_20369126');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 344,300</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="마이크론 Crucial DDR5-5600 CL46 대원씨티에스 (16GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="20369126" />
+							<input type="hidden" name="price" value="344300" />
+							<input type="hidden" name="cardPrice" value="357530" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_27913391">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/391/913/img/27913391_1.jpg" alt="ESSENCORE KLEVV DDR5-5600 CL46 파인인포 (32GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(27913391, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_27913391');">ESSENCORE KLEVV DDR5-5600 CL46 파인인포 (32GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-46-46-90 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 높이:31.25mm / 모듈제조사:SK하이닉스 / A다이 언락</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-46-46-90 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 높이:31.25mm / 모듈제조사:SK하이닉스 / A다이 언락</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(27913391, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_27913391');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 631,770</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="ESSENCORE KLEVV DDR5-5600 CL46 파인인포 (32GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="27913391" />
+							<input type="hidden" name="price" value="631770" />
+							<input type="hidden" name="cardPrice" value="649160" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_18911771">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/771/911/img/18911771_1.jpg" alt="삼성전자 DDR5-5600 (8GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(18911771, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_18911771');">삼성전자 DDR5-5600 (8GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램개수:1개 / 히트싱크:미포함 / 모듈제조사:삼성전자</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램개수:1개 / 히트싱크:미포함 / 모듈제조사:삼성전자</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(18911771, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_18911771');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 234,080</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="삼성전자 DDR5-5600 (8GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="18911771" />
+							<input type="hidden" name="price" value="234080" />
+							<input type="hidden" name="cardPrice" value="238270" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_20644043">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/043/644/img/20644043_1.jpg" alt="삼성전자 DDR5-5600 (32GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(20644043, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_20644043');">삼성전자 DDR5-5600 (32GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램개수:1개 / 히트싱크:미포함 / 모듈제조사:삼성전자</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램개수:1개 / 히트싱크:미포함 / 모듈제조사:삼성전자</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(20644043, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_20644043');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 783,710</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="삼성전자 DDR5-5600 (32GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="20644043" />
+							<input type="hidden" name="price" value="783710" />
+							<input type="hidden" name="cardPrice" value="808880" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_21695174">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/174/695/img/21695174_1.jpg" alt="GeIL DDR5-5600 CL46 PRISTINE V (16GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(21695174, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_21695174');">GeIL DDR5-5600 CL46 PRISTINE V (16GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-46-46-90 / 1.10V / 램개수:1개 / XMP3.0 / 온다이ECC / 히트싱크:미포함 / 높이:31.3mm</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-46-46-90 / 1.10V / 램개수:1개 / XMP3.0 / 온다이ECC / 히트싱크:미포함 / 높이:31.3mm</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(21695174, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_21695174');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 339,020</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="GeIL DDR5-5600 CL46 PRISTINE V (16GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="21695174" />
+							<input type="hidden" name="price" value="339020" />
+							<input type="hidden" name="cardPrice" value="346730" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_94638185">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/185/638/img/94638185_1.jpg" alt="ESSENCORE KLEVV DDR5-5600 CL46 AMD 파인인포 (16GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(94638185, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_94638185');">ESSENCORE KLEVV DDR5-5600 CL46 AMD 파인인포 (16GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-46-46-90 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 높이:31.25mm / 모듈제조사:SK하이닉스</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-46-46-90 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 높이:31.25mm / 모듈제조사:SK하이닉스</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(94638185, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_94638185');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 337,900</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="ESSENCORE KLEVV DDR5-5600 CL46 AMD 파인인포 (16GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="94638185" />
+							<input type="hidden" name="price" value="337900" />
+							<input type="hidden" name="cardPrice" value="347200" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_99737048">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/048/737/img/99737048_1.jpg" alt="AGI DDR5-5600 CL46 UD238 서린 (16GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(99737048, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_99737048');">AGI DDR5-5600 CL46 UD238 서린 (16GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 높이:31.3mm</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 높이:31.3mm</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(99737048, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_99737048');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 337,480</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="AGI DDR5-5600 CL46 UD238 서린 (16GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="99737048" />
+							<input type="hidden" name="price" value="337480" />
+							<input type="hidden" name="cardPrice" value="345190" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_79397219">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/219/397/img/79397219_1.jpg" alt="ADATA DDR5-5600 CL46-45-45 파인인포 (16GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(79397219, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_79397219');">ADATA DDR5-5600 CL46-45-45 파인인포 (16GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-45-45 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 모듈제조사:기타</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46-45-45 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 모듈제조사:기타</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(79397219, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_79397219');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 345,860</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="ADATA DDR5-5600 CL46-45-45 파인인포 (16GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="79397219" />
+							<input type="hidden" name="price" value="345860" />
+							<input type="hidden" name="cardPrice" value="355380" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_18700841">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/841/700/img/18700841_1.jpg" alt="SK하이닉스 DDR5-5600 (32GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(18700841, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_18700841');">SK하이닉스 DDR5-5600 (32GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 1.10V / 램개수:1개 / 히트싱크:미포함 / 모듈제조사:SK하이닉스</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 1.10V / 램개수:1개 / 히트싱크:미포함 / 모듈제조사:SK하이닉스</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(18700841, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_18700841');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 805,680</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="SK하이닉스 DDR5-5600 (32GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="18700841" />
+							<input type="hidden" name="price" value="805680" />
+							<input type="hidden" name="cardPrice" value="831050" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_18883523">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/523/883/img/18883523_1.jpg" alt="SK하이닉스 DDR5-5600 (16GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(18883523, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_18883523');">SK하이닉스 DDR5-5600 (16GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 1.10V / 램개수:1개 / 히트싱크:미포함 / 모듈제조사:SK하이닉스</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 1.10V / 램개수:1개 / 히트싱크:미포함 / 모듈제조사:SK하이닉스</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(18883523, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_18883523');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 378,230</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="SK하이닉스 DDR5-5600 (16GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="18883523" />
+							<input type="hidden" name="price" value="378230" />
+							<input type="hidden" name="cardPrice" value="388640" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_12872324">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/324/872/img/12872324_1.jpg" alt="AMD 라이젠5-4세대 5600X (버미어) (해외구매)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(12872324, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_12872324');">AMD 라이젠5-4세대 5600X (버미어) (해외구매)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">AMD(소켓AM4) / 6코어 / 12스레드 / 메모리 규격:DDR4 / 내장그래픽:미탑재 / 4세대(Zen3) / 7nm / 기본 클럭:3.7GHz / 최대 클럭:4.6GHz / L2 캐시:3MB / L3 캐시:32MB / TDP:65W / PCIe4.0 / 3200MHz / 기술 지원:SMT(하이퍼스레딩);StoreMI;AMD Ryzen Master;VR Ready 프리미엄</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>AMD(소켓AM4) / 6코어 / 12스레드 / 메모리 규격:DDR4 / 내장그래픽:미탑재 / 4세대(Zen3) / 7nm / 기본 클럭:3.7GHz / 최대 클럭:4.6GHz / L2 캐시:3MB / L3 캐시:32MB / TDP:65W / PCIe4.0 / 3200MHz / 기술 지원:SMT(하이퍼스레딩);StoreMI;AMD Ryzen Master;VR Ready 프리미엄</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(12872324, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_12872324');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price">판매준비</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="873" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="873" />
+							<input type="hidden" name="categorySeq3" value="960" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="AMD 라이젠5-4세대 5600X (버미어) (해외구매)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="12872324" />
+							<input type="hidden" name="price" value="0" />
+							<input type="hidden" name="cardPrice" value="0" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_79408823">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/823/408/img/79408823_1.jpg" alt="삼성전자 DDR5-5600 ECC/REG (64GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(79408823, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_79408823');">삼성전자 DDR5-5600 ECC/REG (64GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">서버용 / DDR5 / 5600MHz (PC5-44800) / 램개수:1개 / ECC / REG / 히트싱크:미포함 / 모듈제조사:삼성전자</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>서버용 / DDR5 / 5600MHz (PC5-44800) / 램개수:1개 / ECC / REG / 히트싱크:미포함 / 모듈제조사:삼성전자</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(79408823, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_79408823');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 3,466,200</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="삼성전자 DDR5-5600 ECC/REG (64GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="79408823" />
+							<input type="hidden" name="price" value="3466200" />
+							<input type="hidden" name="cardPrice" value="3545700" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_100700621">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/621/700/img/100700621_1.jpg" alt="OLOy DDR5-5600 CL40 BLADE RGB BLACK 패키지 올로코리아 (32GB(16Gx2))" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(100700621, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_100700621');">OLOy DDR5-5600 CL40 BLADE RGB BLACK 패키지 올로코리아 (32GB(16Gx2))</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL40-40-40-76 / 1.25V / 램개수:2개 / LED 라이트 / XMP3.0 / EXPO / 온다이ECC / 히트싱크:방열판 / 방열판 색상:블랙 / LED색상:RGB / LED 시스템:AURA SYNC;MYSTIC LIGHT;RGB FUSION;POLYCHROME / 높이:39mm</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL40-40-40-76 / 1.25V / 램개수:2개 / LED 라이트 / XMP3.0 / EXPO / 온다이ECC / 히트싱크:방열판 / 방열판 색상:블랙 / LED색상:RGB / LED 시스템:AURA SYNC;MYSTIC LIGHT;RGB FUSION;POLYCHROME / 높이:39mm</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(100700621, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_100700621');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 757,550</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="OLOy DDR5-5600 CL40 BLADE RGB BLACK 패키지 올로코리아 (32GB(16Gx2))" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="100700621" />
+							<input type="hidden" name="price" value="757550" />
+							<input type="hidden" name="cardPrice" value="778400" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_104627873">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/873/627/img/104627873_1.jpg" alt="AMD 라이젠7-6세대 9850X3D (그래니트 릿지) (멀티팩 정품)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(104627873, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_104627873');">AMD 라이젠7-6세대 9850X3D (그래니트 릿지) (멀티팩 정품)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">AMD(소켓AM5) / 8코어 / 16스레드 / 메모리 규격:DDR5 / 내장그래픽:탑재 / 6세대(Zen5) / TSMC 4nm / 기본 클럭:4.7GHz / 최대 클럭:5.6GHz / L2 캐시:8MB / L3 캐시:96MB / TDP:120W / PCIe5.0 / 5600MHz / AMD 라데온 그래픽 / 기술 지원:SMT(하이퍼스레딩);AMD Ryzen Master;AMD 3D V캐시 / 쿨러:미포함</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>AMD(소켓AM5) / 8코어 / 16스레드 / 메모리 규격:DDR5 / 내장그래픽:탑재 / 6세대(Zen5) / TSMC 4nm / 기본 클럭:4.7GHz / 최대 클럭:5.6GHz / L2 캐시:8MB / L3 캐시:96MB / TDP:120W / PCIe5.0 / 5600MHz / AMD 라데온 그래픽 / 기술 지원:SMT(하이퍼스레딩);AMD Ryzen Master;AMD 3D V캐시 / 쿨러:미포함</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(104627873, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_104627873');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																					<p class="event">
+								<span class="event_txt">이벤트</span>
+								<a href="/virtualestimate/?controller=info&methods=vEstimateEvent&marketPlaceSeq=16&eventCategorySeq=12750" target="_blank" onmousedown="gtagSend('PC견적메인','상품리스트','이벤트_104627873');">구매 시 붉은사막 게임 선착순 증정!</a>
+							</p>
+													</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 828,400</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="873" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="873" />
+							<input type="hidden" name="categorySeq3" value="960" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="AMD 라이젠7-6세대 9850X3D (그래니트 릿지) (멀티팩 정품)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="104627873" />
+							<input type="hidden" name="price" value="828400" />
+							<input type="hidden" name="cardPrice" value="851200" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="구매 시 붉은사막 게임 선착순 증정!" />
+							<input type="hidden" name="eventUrl" value="/virtualestimate/?controller=info&methods=vEstimateEvent&marketPlaceSeq=16&eventCategorySeq=12750" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_16950473">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/473/950/img/16950473_1.jpg" alt="AMD 라이젠5-4세대 5600 (버미어) (해외구매)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(16950473, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_16950473');">AMD 라이젠5-4세대 5600 (버미어) (해외구매)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">AMD(소켓AM4) / 6코어 / 12스레드 / 메모리 규격:DDR4 / 내장그래픽:미탑재 / 4세대(Zen3) / 7nm / 기본 클럭:3.5GHz / 최대 클럭:4.4GHz / L2 캐시:3MB / L3 캐시:32MB / TDP:65W / PCIe4.0 / 3200MHz / 기술 지원:SMT(하이퍼스레딩);StoreMI;AMD Ryzen Master;VR Ready 프리미엄 / 시네벤치R23(싱글):1460 / 시네벤치R23(멀티):10906</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>AMD(소켓AM4) / 6코어 / 12스레드 / 메모리 규격:DDR4 / 내장그래픽:미탑재 / 4세대(Zen3) / 7nm / 기본 클럭:3.5GHz / 최대 클럭:4.4GHz / L2 캐시:3MB / L3 캐시:32MB / TDP:65W / PCIe4.0 / 3200MHz / 기술 지원:SMT(하이퍼스레딩);StoreMI;AMD Ryzen Master;VR Ready 프리미엄 / 시네벤치R23(싱글):1460 / 시네벤치R23(멀티):10906</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(16950473, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_16950473');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price">판매준비</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="873" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="873" />
+							<input type="hidden" name="categorySeq3" value="960" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="AMD 라이젠5-4세대 5600 (버미어) (해외구매)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="16950473" />
+							<input type="hidden" name="price" value="0" />
+							<input type="hidden" name="cardPrice" value="0" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_97704881">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/881/704/img/97704881_1.jpg" alt="AMD 라이젠5-6세대 9500F (그래니트 릿지) (멀티팩 정품)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(97704881, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_97704881');">AMD 라이젠5-6세대 9500F (그래니트 릿지) (멀티팩 정품)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">AMD(소켓AM5) / 6코어 / 12스레드 / 메모리 규격:DDR5 / 내장그래픽:미탑재 / 6세대(Zen5) / TSMC 4nm / 기본 클럭:3.8GHz / 최대 클럭:5.0GHz / L2 캐시:6MB / L3 캐시:32MB / TDP:65W / PPT:88W / PCIe5.0 / 5600MHz / 기술 지원:SMT(하이퍼스레딩) / 쿨러:Wraith Stealth 포함 / 시네벤치R23(싱글):1689 / 시네벤치R23(멀티):12803</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>AMD(소켓AM5) / 6코어 / 12스레드 / 메모리 규격:DDR5 / 내장그래픽:미탑재 / 6세대(Zen5) / TSMC 4nm / 기본 클럭:3.8GHz / 최대 클럭:5.0GHz / L2 캐시:6MB / L3 캐시:32MB / TDP:65W / PPT:88W / PCIe5.0 / 5600MHz / 기술 지원:SMT(하이퍼스레딩) / 쿨러:Wraith Stealth 포함 / 시네벤치R23(싱글):1689 / 시네벤치R23(멀티):12803</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																												<span class="icon_style md_recom">MD추천</span>
+																	</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(97704881, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_97704881');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 315,360</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="873" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="873" />
+							<input type="hidden" name="categorySeq3" value="960" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="AMD 라이젠5-6세대 9500F (그래니트 릿지) (멀티팩 정품)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="97704881" />
+							<input type="hidden" name="price" value="315360" />
+							<input type="hidden" name="cardPrice" value="327040" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+									<tr class="productList_99893666">
+
+						<td class="goods_img">
+							<div class="goods_img_box">
+								<img src="//img.danawa.com/prod_img/500000/666/893/img/99893666_1.jpg" alt="Apacer DDR5-5600 CL46 (16GB)" />
+								<!-- 선택시 btn_compare_on -->
+								<a class="btn_compare" href="" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품비교체크박스');"><span class="icon"></span><span class="hide_txt">비교</span></a>
+								<span class="compare_txt">상품비교</span>
+							</div>
+						</td>
+						<td class="title_price">
+							<p class="subject"><a href="" onclick="productInfoPopup(99893666, '&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('추천견적','상품리스트','상품명_99893666');">Apacer DDR5-5600 CL46 (16GB)</a></p>
+							<!-- spec_wrap -->
+							<div class="spec_wrap">
+								<div class="spec_bg">
+									<a href="" class="spec" onclick="return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품정보');">데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 높이:32mm</a>
+									<div class="layer_comm spec_info" style="display:none;left:0px;right:0px;top:auto;">
+										<h4 class="lc_title">상품정보</h4>
+										<div class="spec_info_contents">
+											<p>데스크탑용 / DDR5 / 5600MHz (PC5-44800) / 램타이밍:CL46 / 1.10V / 램개수:1개 / 온다이ECC / 히트싱크:미포함 / 높이:32mm</p>
+										</div>
+										<button class="btn_close" type="button"><i aria-hidden="true" class="ico_market ico_close"></i><span class="blind">닫기</span></button>
+									</div>
+								</div>
+							</div>
+							<!--// spec_wrap -->
+
+														<!-- addition_wrap -->
+							<div class="addition_wrap">
+								<div class="service_badge">
+																		<!-- 유통 아이콘 -->
+									<div class="ninety_help distribution" tabindex="0">
+										<span class="icon_style" aria-describedby="danawaDistribution1">다나와유통</span>
+										<div class="layer_safeup_plus" id="danawaDistribution1" role="tooltip">
+											<span class="arrw"></span>
+												<p class="layer_notice_title">다나와유통이란?</p>
+												<p class="safeup_plus_txt">다나와가 공식 공급사와 직접 계약을 통해 매입한 정품입니다.<br>
+													해당 아이콘이 적용된 모든 제품은 공인 서비스 센터 및<br>
+													다나와를 통해 A/S를 보증합니다.
+												</p>
+										</div>
+									</div>
+																		<!-- MD추천플러스 -->
+																										</div>
+								<!-- 다나와 AS 아이콘 -->
+																<div class="review_btn_area">
+																	<a href="" onclick="productInfoPopup(99893666, '&community=1&marketPlaceSeq=16'); return false;" onmousedown="gtagSend('PC견적메인','상품리스트','상품의견_99893666');" class="icon_style btn_review">상품의견</a>
+																								</div>
+							</div>
+							<!-- // addition_wrap -->
+							
+																				</td>
+						<td class="rig_line">
+							<p class="low_price"><span class="prod_price"> 332,350</span>원</p>
+							<a href="" class="btn_choice2 wishAction" onclick="gtagSend('', 'PC견적_메인_상품리스트_담기', '', 'product_code', ''); return false;">담기<span class="icon"></span></a>
+							<input type="hidden" name="type" value="1" />
+							<input type="hidden" name="category" value="CPU" />
+							<input type="hidden" name="linkCategorySeq" value="874" />
+							<input type="hidden" name="categoryDepth" value="2" />
+							<input type="hidden" name="categorySeq1" value="861" />
+							<input type="hidden" name="categorySeq2" value="874" />
+							<input type="hidden" name="categorySeq3" value="221725" />
+							<input type="hidden" name="categorySeq4" value="0" />
+							<input type="hidden" name="name" value="Apacer DDR5-5600 CL46 (16GB)" />
+							<input type="hidden" name="quantity" value="1" />
+							<input type="hidden" name="code" value="99893666" />
+							<input type="hidden" name="price" value="332350" />
+							<input type="hidden" name="cardPrice" value="341490" />
+							<input type="hidden" name="earnPoint" value="0" />
+							<input type="hidden" name="displayGroupSeq" value="0" />
+							<input type="hidden" name="eventTitle" value="" />
+							<input type="hidden" name="eventUrl" value="" />
+							<input type="hidden" name="oemProductYN" value="N" />
+							<input type="hidden" name="oemSupportProductYN" value="N" />
+						</td>
+					</tr>
+								</tbody>
+			</table>
+		</div>
+		<!--// scroll_box -->
+
+		<!-- paging_estimate -->
+		<div class="paging_estimate">
+			<div class="pagination-box"><ul class="pagination-box__list"><li class="pagination-box__item pagination--now">1</li><li class="pagination-box__item" page="2"><a href="">2</a></li><li class="pagination-box__item" page="3"><a href="">3</a></li><li class="pagination-box__item" page="4"><a href="">4</a></li><li class="pagination-box__item" page="5"><a href="">5</a></li><li class="pagination-box__item" page="6"><a href="">6</a></li><li class="pagination-box__item" page="7"><a href="">7</a></li><li class="pagination-box__item" page="8"><a href="">8</a></li><li class="pagination-box__item" page="9"><a href="">9</a></li><li class="pagination-box__item" page="10"><a href="">10</a></li><li class="pagination-box__item pagination--next" page="11"><a href="" class="btn-pagination__arrow">다음 페이지로</a></li></ul></div>		</div>
+		<!--// paging_estimate -->
+
+	</div>
+	<!--// list_tbl_wrap admd_tbl_wrap -->
+
+</div>
+
+<script>
+function trackSearchDetailApply() {
+    var include = $('#includeText').val().trim();
+    var exclude = $('#excludeText').val().trim();
+    var minPrice = $('#minPrice').val().replace(/[^0-9]/g, '');
+
+    var keywordPart = [];
+
+    if (include !== '') keywordPart.push(include + '포함');
+    if (exclude !== '') keywordPart.push(exclude + '제외');
+    if (minPrice !== '') keywordPart.push(minPrice + '원 이상');
+
+    var keywordString = keywordPart.join('_');
+
+    gtagSend('', 'PC견적_메인_결과내검색레이어_적용 | ' + keywordString, '', 'search_keyword', keywordString);
+}
+</script>
+
+
+	
+</body>
+</html>
+
+

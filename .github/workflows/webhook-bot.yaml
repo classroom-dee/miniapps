@@ -8,10 +8,6 @@ on:
     types: [opened, synchronize]
     paths:
       - "webhook-bot/**"
-      - "README.md"
-      - ".github/**"
-      - ".vscode/**"
-      - ".prettierrc"
 
 jobs:
   # # No CI yet
