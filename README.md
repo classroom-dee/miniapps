@@ -9,3 +9,4 @@
 |[Score Generator](https://github.com/classroom-dee/miniapps/tree/main/music-gen)|❌|❌|Dynamically generates bars and outputs to standard xml format|
 |[Webhook Bot](https://github.com/classroom-dee/miniapps/tree/main/webhook-bot)|✔️|❌|Discord webhook bot on Cloudflare(Not a gateway bot)|
 |[HW Retail Watcher](https://github.com/classroom-dee/miniapps/tree/main/retail-watch)|✔️|❌|Retail price watcher for PC parts|
+|[Reusable Dev Environment](https://github.com/classroom-dee/miniapps/tree/main/dupyter)|✔️|❌|Reusable Python & Jupyter images for clean containment|
