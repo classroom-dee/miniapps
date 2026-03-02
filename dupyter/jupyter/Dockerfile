@@ -31,7 +31,7 @@ EXPOSE $JUPYTER_PORT
 # Start Jupyter when the container runs
 CMD ["jupyter", "notebook", \
     "--ip=0.0.0.0", \
-    "--port=${JUPYTER_PORT}", \
+    "--port=8888", \
     "--no-browser", \
     "--notebook-dir=/opt/jupyter/workspace", \
     "--allow-root", \
