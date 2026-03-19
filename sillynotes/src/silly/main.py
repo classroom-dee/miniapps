@@ -6,7 +6,7 @@ from silly.app import NoteWidgetApp
 
 
 def main() -> None:
-    db_path = Path("silly.sqlite3")
+    db_path = Path.cwd() / "silly.sqlite3"
     app = NoteWidgetApp(db_path)
     app.run()
 

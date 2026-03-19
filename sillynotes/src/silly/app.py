@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import tkinter as tk
 from pathlib import Path
-from tkinter import messagebox, simpledialog, ttk
+from tkinter import filedialog, messagebox, simpledialog, ttk
 
 from silly.db import Database
 from silly.models import Message
@@ -13,17 +13,23 @@ class NoteWidgetApp:
         self.db = Database(db_path)
         self.current_message_id: int | None = None
         self._rotation_job: str | None = None
+        self._drag_offset_x = 0
+        self._drag_offset_y = 0
+        self.is_pinned = True
 
         self.root = tk.Tk()
-        self.root.title("Notes")
-        self.root.geometry("320x120")
-        self.root.minsize(260, 100)
-        self.root.attributes("-topmost", True)
+        self.root.title("Today's note")
+        self.root.geometry("340x120+80+80")
+        self.root.overrideredirect(True)
+        self.root.attributes("-topmost", self.is_pinned)
 
-        self.message_var = tk.StringVar(value="No notes yet.")
+        self.message_var = tk.StringVar(value="No active notes. Add one in Manage.")
+        self.pin_var = tk.StringVar(value="Pinned")
         self.interval_var = tk.StringVar()
 
         self._build_main_ui()
+        self._build_context_menu()
+        self._bind_window_drag()
         self._refresh_interval_label()
         self._show_initial_message()
         self._schedule_next_rotation()
@@ -31,27 +37,113 @@ class NoteWidgetApp:
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
 
     def _build_main_ui(self) -> None:
-        outer = ttk.Frame(self.root, padding=10)
+        self.root.configure(bg="#202225")
+
+        outer = tk.Frame(
+            self.root,
+            bg="#202225",
+            highlightthickness=1,
+            highlightbackground="#4a4f57",
+            bd=0,
+        )
         outer.pack(fill="both", expand=True)
 
-        label = ttk.Label(
-            outer,
+        title_bar = tk.Frame(outer, bg="#2b2f36", height=26)
+        title_bar.pack(fill="x")
+
+        self.title_label = tk.Label(
+            title_bar,
+            text="Today's note",
+            bg="#2b2f36",
+            fg="#f2f2f2",
+            anchor="w",
+            padx=8,
+        )
+        self.title_label.pack(side="left", fill="x", expand=True)
+
+        self.status_label = tk.Label(
+            title_bar,
+            textvariable=self.pin_var,
+            bg="#2b2f36",
+            fg="#c7c7c7",
+            padx=6,
+        )
+        self.status_label.pack(side="right")
+
+        body = tk.Frame(outer, bg="#202225", padx=10, pady=10)
+        body.pack(fill="both", expand=True)
+
+        self.message_label = tk.Label(
+            body,
             textvariable=self.message_var,
-            anchor="center",
+            bg="#202225",
+            fg="#ffffff",
             justify="center",
-            wraplength=280,
-            font=("TkDefaultFont", 12),
+            wraplength=300,
+            font=("TkDefaultFont", 11),
         )
-        label.pack(fill="both", expand=True, pady=(0, 8))
+        self.message_label.pack(fill="both", expand=True)
 
-        controls = ttk.Frame(outer)
-        controls.pack(fill="x")
+        footer = tk.Frame(body, bg="#202225")
+        footer.pack(fill="x", pady=(8, 0))
 
-        ttk.Button(controls, text="Next", command=self.rotate_now).pack(side="left")
-        ttk.Button(controls, text="Manage", command=self.open_manager).pack(
-            side="left", padx=(6, 0)
-        )
-        ttk.Label(controls, textvariable=self.interval_var).pack(side="right")
+        tk.Button(
+            footer,
+            text="Next",
+            command=self.rotate_now,
+            relief="flat",
+            bd=0,
+            padx=8,
+            pady=3,
+        ).pack(side="left")
+
+        tk.Button(
+            footer,
+            text="Manage",
+            command=self.open_manager,
+            relief="flat",
+            bd=0,
+            padx=8,
+            pady=3,
+        ).pack(side="left", padx=(6, 0))
+
+        tk.Label(
+            footer,
+            textvariable=self.interval_var,
+            bg="#202225",
+            fg="#bbbbbb",
+        ).pack(side="right")
+
+        self.message_label.bind("<Double-Button-1>", lambda _e: self.open_manager())
+        self.root.bind("<Button-3>", self._show_context_menu)
+
+    def _build_context_menu(self) -> None:
+        self.menu = tk.Menu(self.root, tearoff=0)
+        self.menu.add_command(label="Next note", command=self.rotate_now)
+        self.menu.add_command(label="Manage notes", command=self.open_manager)
+        self.menu.add_separator()
+        self.menu.add_command(label="Pin / Unpin", command=self.toggle_pin)
+        self.menu.add_command(label="Import Text File", command=self.import_messages)
+        self.menu.add_separator()
+        self.menu.add_command(label="Quit", command=self.on_close)
+
+    def _show_context_menu(self, event: tk.Event) -> None:
+        self.menu.tk_popup(event.x_root, event.y_root)
+
+    def _bind_window_drag(self) -> None:
+        drag_widgets = [self.root, self.title_label, self.status_label]
+        for widget in drag_widgets:
+            widget.bind("<ButtonPress-1>", self._start_drag)
+            widget.bind("<B1-Motion>", self._on_drag)
+
+    def _start_drag(self, event: tk.Event) -> None:
+        self._drag_offset_x = event.x_root - self.root.winfo_x()
+        self._drag_offset_y = event.y_root - self.root.winfo_y()
+
+    def _on_drag(self, event: tk.Event) -> None:
+        x = event.x_root - self._drag_offset_x
+        y = event.y_root - self._drag_offset_y
+        self.root.geometry(f"+{x}+{y}")
 
     def _refresh_interval_label(self) -> None:
         settings = self.db.get_settings()
@@ -91,8 +183,50 @@ class NoteWidgetApp:
         self.current_message_id = message.id
         self.message_var.set(message.text)
 
+    def toggle_pin(self) -> None:
+        self.is_pinned = not self.is_pinned
+        self.root.attributes("-topmost", self.is_pinned)
+        self.pin_var.set("Pinned" if self.is_pinned else "Unpinned")
+
     def open_manager(self) -> None:
         ManagerWindow(self)
+
+    def import_messages(self) -> None:
+        path = filedialog.askopenfilename(
+            parent=self.root,
+            title="Import notes from text file",
+            filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
+        )
+        if not path:
+            return
+
+        added = 0
+        skipped = 0
+
+        try:
+            with open(path, "r", encoding="utf-8") as handle:
+                for line in handle:
+                    text = line.strip()
+                    if not text:
+                        continue
+                    try:
+                        self.db.add_message(text)
+                        added += 1
+                    except Exception:
+                        skipped += 1
+        except Exception as exc:
+            messagebox.showerror("Import failed", str(exc), parent=self.root)
+            return
+
+        if self.current_message_id is None:
+            self.rotate_now()
+        self._schedule_next_rotation()
+
+        messagebox.showinfo(
+            "Import complete",
+            f"Added: {added}\nSkipped: {skipped}",
+            parent=self.root,
+        )
 
     def on_close(self) -> None:
         self._cancel_scheduled_rotation()
@@ -110,7 +244,7 @@ class ManagerWindow:
 
         self.window = tk.Toplevel(app.root)
         self.window.title("Manage notes")
-        self.window.geometry("520x360")
+        self.window.geometry("560x380")
         self.window.transient(app.root)
 
         self._build_ui()
@@ -145,18 +279,15 @@ class ManagerWindow:
         )
 
         columns = ("id", "text", "blacklisted")
-        self.tree = ttk.Treeview(
-            self.window, columns=columns, show="headings", height=12
-        )
+        self.tree = ttk.Treeview(outer, columns=columns, show="headings", height=14)
         self.tree.heading("id", text="ID")
         self.tree.heading("text", text="Message")
         self.tree.heading("blacklisted", text="Blacklisted")
 
         self.tree.column("id", width=60, anchor="center")
-        self.tree.column("text", width=360, anchor="w")
+        self.tree.column("text", width=390, anchor="w")
         self.tree.column("blacklisted", width=90, anchor="center")
-
-        self.tree.pack(fill="both", expand=True, padx=10, pady=(0, 10))
+        self.tree.pack(fill="both", expand=True)
 
         interval = self.db.get_settings().rotation_interval_seconds
         self.interval_entry.delete(0, tk.END)
@@ -166,8 +297,7 @@ class ManagerWindow:
         for item in self.tree.get_children():
             self.tree.delete(item)
 
-        messages = self.db.list_messages(include_blacklisted=True)
-        for msg in messages:
+        for msg in self.db.list_messages(include_blacklisted=True):
             self.tree.insert(
                 "",
                 "end",
@@ -195,9 +325,7 @@ class ManagerWindow:
         selection = self.tree.selection()
         if not selection:
             return None
-
-        message_id = int(selection[0])
-        return self.db.get_message(message_id)
+        return self.db.get_message(int(selection[0]))
 
     def delete_selected(self) -> None:
         message = self._selected_message()
