@@ -6,6 +6,7 @@ A tiny Python desktop widget that displays a rotating user-defined messages from
 - Create, edit, delete notes
 - Configurable rotation interval
 - Blacklist notes from rotation
+- Config menu and context menu
 - Lightweight, local-first
 
 ### Why
@@ -18,7 +19,7 @@ cd sillynotes
 python -m venv .venv
 source .venv/bin/activate
 pip install -e .[dev]
-python -m silly.app
+python -m silly.main
 ```
 
 ### Tests
@@ -26,3 +27,6 @@ python -m silly.app
 ```bash
 pytest
 ```
+
+### Screenshot
+![Demo](./silly_demo.jpg)
