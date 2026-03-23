@@ -2,21 +2,27 @@
 
 A tiny Python desktop widget that displays a rotating user-defined messages from an SQLite database.
 
-## Planned features
-- Small always-on desktop widget window
-- SQLite-backed message storage
-- Add/delete messages
+### What it does
+- Create, edit, delete notes
 - Configurable rotation interval
-- Blacklist messages without deleting them
-- Low resource usage
-- Pytest test suite
+- Blacklist notes from rotation
+- Lightweight, local-first
 
-## Development
+### Why
+Built for fast iteration practice and personal use. Kept intentionally small to focus on shipping.
+
+### Run
 
 ```bash
+cd sillynotes
 python -m venv .venv
 source .venv/bin/activate
 pip install -e .[dev]
+python -m silly.app
+```
+
+### Tests
+
+```bash
 pytest
-python -m motto_widget.app
 ```
