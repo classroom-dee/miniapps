@@ -1,18 +1,20 @@
+<!--
 ---
 name: Mini Apps Collection
-date: 2026-03-01
+date: 2026-03-19
 tags: [githubaction, docker, python, node, react, typescript, cloudflare]
 summary: A collection of small projects and PoCs
 ---
+-->
 
-### 📚 About This Repository
+# Mini Apps
 
 This repository is a curated collection of small, mini-projects.
 Each project lives in its own folder.
 
 The goal of this repo is to:
 - Experiment with new ideas quickly
-- Keep projects small, isolated, and easy to understand
+- Keep projects small, isolated, reproducible and easy to understand
 - Build some time saving tools to help increase productivity
 
 *This repo is not meant to be a single production app.*
