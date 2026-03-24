@@ -7,8 +7,13 @@ locality/build/
 locality/dist/locale-master
 locality/dist/locale-master-win.exe
 
-# test logs
+# test logs and artifacts
 locality/dist/locale-master.log
+**/*.egg-info/
 
 # music gen artifacts
 music-gen/out/**
+
+# db
+*.db
+*.sqlite3*
