@@ -1,2 +1,6 @@
+# Jupyter Server
 ### Overview
-- For isolating dev environment and reusing it and not generating a million venvs LMFAO 🤪
+- For isolating dev environment.
+
+### Future Improvements
+- Needs update entrypoint to use modern Jupyter init

@@ -1,32 +1,40 @@
-### Simple Widget For Locality
-- Weather
-- DateTime
-- City + Country
-- Built with pyinstaller
-- More importantly... no data collection!
+# Locality Widget
 
-### Install and usage
-**If you have an older version, you need to delete the config file under c:/users/your-user-name/.locale_master.json**
-- Get the release from [here](https://github.com/classroom-dee/miniapps/releases/latest)
-- Unzip
-- Use with right-click context menu
-- Don't add/remove things too quickly -> will quickly hit the API rate limit
+A lightweight desktop widget that displays local information such as weather, date/time, and location. Built with Python and packaged for easy use, with a focus on privacy and simplicity.
 
-### Dev
-1. `pip install -r requirements.txt --no-cache-dir`
-2. `python main.py`
+### What it does
+- Displays current weather
+- Shows date and time
+- Displays city and country
+- Runs as a small desktop widget
+- Uses caching to avoid hitting rate limits
+- Uses a right-click context menu for interaction
 
-### Build
-**In windows, your Python must be built with Tcl/Tk, i.e., Python from the MS Store**
-**For Linux, install python with python3-tk(Debian) -> Desktop versions seem to include this**
-1. Clone this, make a disposable env `python -m venv .venv` and then `source .venv/bin/activate` or `.venv\Scripts\activate.bat` in Windows
-2. `pip install pyinstaller`
-3. `cd locality`
-4. `pyinstaller --onefile --add-data="assets/meteocon/*.png:assets/meteocon" --hidden-import=requests -n locale-master main.py`
-5. Or, on Windows: `pyinstaller.exe --onefile --add-data="assets/meteocon:assets/meteocon" --hidden-import=requests --noconsole -n locale-master-win main.py`
+### Why
+- Built as a minimal, local-first widget for quick glanceable information
+- Focuses on privacy(no data collection) and simplicity
+- Designed to be lightweight and unobtrusive
 
-### Todos and issues
-- Build for Linux
+### Dependencies
+- Tkinter must be bundled in your python. Check with `python -m "import tkinter"`
+- `pyinstaller` for building
+- See `requirements.txt`
 
-### Acknowledgement
-Weather icons from [**Meteocons** by Bas Milius](https://github.com/basmilius/weather-icons)
+### Setup
+1. Download the latest release from: https://github.com/classroom-dee/miniapps/releases/latest
+2. Unzip the archive
+3. Run the executable
+4. Use the right-click context menu to interact
+
+*If you have an older version, delete the config file at: C:/Users/your-username/.locale_master.json*
+
+*Avoid rapid interactions — you may hit API rate limits.*
+
+### Run
+- `python main.py`
+
+### Screenshot
+![Screenshot](./capgen.jpeg)
+
+### Future Improvements
+- Other os build support
