@@ -1,38 +1,22 @@
 FROM python:3.12-slim
 
-# Set up environment variables
 ENV DEBIAN_FRONTEND=noninteractive \
     JUPYTER_PORT=8888 \
     JUPYTER_DIR=/opt/jupyter
 
-WORKDIR $JUPYTER_DIR
+RUN useradd -ms /bin/bash jovian
 
-# Install dependencies
-# RUN apt-get update && apt-get install -y \
-    # build-essential \
-    # && rm -rf /var/lib/apt/lists/*
-    
+WORKDIR ${JUPYTER_DIR}
+
+# Some basic stuff
 COPY requirements.txt /requirements.txt
 
-# Install Jupyter and required Python packages
-RUN pip install --no-cache-dir -r /requirements.txt
-RUN mkdir -p $JUPYTER_DIR/workspace
+RUN pip install --no-cache-dir -r /requirements.txt && \
+    mkdir -p ${JUPYTER_DIR}/workspace && \
+    chown -R jovian:jovian ${JUPYTER_DIR}
 
-# Expose Jupyter port
-EXPOSE $JUPYTER_PORT
+USER jovian
 
-# Set up Jupyter notebook config: Now passed as command args directly
-# RUN jupyter notebook --generate-config -y && \
-#     echo "c.NotebookApp.ip = '0.0.0.0'" >> ~/.jupyter/jupyter_notebook_config.py && \
-#     echo "c.NotebookApp.open_browser = False" >> ~/.jupyter/jupyter_notebook_config.py && \
-#     echo "c.NotebookApp.token = ''" >> ~/.jupyter/jupyter_notebook_config.py  
-# Disable token auth
+EXPOSE ${JUPYTER_PORT}
 
-# Start Jupyter when the container runs
-CMD ["jupyter", "notebook", \
-    "--ip=0.0.0.0", \
-    "--port=8888, \
-    "--no-browser", \
-    "--notebook-dir=/opt/jupyter/workspace", \
-    "--allow-root", \
-    "--NotebookApp.token="]
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--ServerApp.root_dir=/opt/jupyter/workspace"]
